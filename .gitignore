@@ -231,12 +231,12 @@ Icon
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
-
+/target/
+/src/main/webapp/META-INF/context.xml
 /src/main/webapp/WEB-INF/web.xml
-/.mvn/wrapper/
+/src/main/resources/META-INF/beans.xml
+/src/main/resources/META-INF/persistence.xml
+/.mvn/wrapper/maven-wrapper.properties
 /Moment.iml
 /mvnw
 /mvnw.cmd
-/pom.xml
-/src/main/webapp/META-INF/context.xml
-/src/main/resources/META-INF/

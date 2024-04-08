@@ -1,4 +1,6 @@
 package com.moment.controller;
 
-public class FrontController {
+import javax.servlet.http.HttpServlet;
+
+public class FrontController extends HttpServlet {
 }
