@@ -12,8 +12,5 @@
 </head>
 <body>
 
-<footer>
-    <a href="/main.jsp">처음으로</a><br>
-</footer>
 </body>
 </html>
