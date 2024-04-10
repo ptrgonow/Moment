@@ -1,11 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<html>
+<!Doctype html>
+<html lang="ko">
 <head>
     <title></title>
 </head>
 <body>
 
-<h2>테스트 입니다</h2>
+    <button type="button" onclick="location.href='user_login.go'">
+        유저 로그인
+    </button>
 
 </body>
 </html>
