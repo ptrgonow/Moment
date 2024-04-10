@@ -241,3 +241,5 @@ Icon
 /mvnw
 /mvnw.cmd
 /pom.xml
+/src/main/resources/credentials.json
+/tokens/

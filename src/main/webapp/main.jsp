@@ -6,9 +6,17 @@
 </head>
 <body>
 
-    <button type="button" onclick="location.href='user_login.go'">
-        유저 로그인
-    </button>
-
+<div align="center">
+    <br>
+    <br>
+    <br>
+    <form method="post" action="upload.go" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <input type="submit" value="upload" />
+    </form>
+    <br>
+    <br>
+    <input type="button" value="list" onclick="location.href='list.go'" />
+</div>
 </body>
 </html>
