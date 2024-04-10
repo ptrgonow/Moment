@@ -15,6 +15,7 @@ import java.util.StringTokenizer;
 
 public class FrontController extends HttpServlet {
 
+  
     public FrontController() {
         super();
     }
@@ -31,7 +32,7 @@ public class FrontController extends HttpServlet {
         ActionForward forward = null;
         Properties prop = new Properties();
         // TODO : 본인들 파일 경로 잘 확인해서 fileInputStream 경로 설정하기
-        FileInputStream fis = new FileInputStream("/Users/patrick/Downloads/NCS/Dairy/Moment/src/main/java/com/moment/configuration/mapping.properties");
+        FileInputStream fis = new FileInputStream("");
         prop.load(fis);
         String value = prop.getProperty(requestURI).trim();
         System.out.println("value: " + value);
