@@ -14,7 +14,9 @@ package com.moment.admin.model;
                 }
 
         대문자로 작성한다. (SELECTION, INSERTION, DELETION, UPDATE)
-        ex) SELECTION_SHOP_PRODUCT_ALL = "SELECT * FROM SHOP_PRODUCT";
+
+        ex) SELECTION_SHOP_PRODUCT_ALL("query 1"),
+        ex) SELECTION_NOTICE_LIST("query 2"), ;
 
 
      */

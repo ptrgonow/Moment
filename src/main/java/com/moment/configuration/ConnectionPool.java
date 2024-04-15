@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 public class ConnectionPool {
 
     Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
 
     private static ConnectionPool instance = null;
 
