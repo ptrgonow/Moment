@@ -1,8 +1,6 @@
 package com.moment.admin.model;
 
-public enum AdminSQL {
-
-    /*
+/*
 
             열거형 클래스 (Enum class)
 
@@ -20,7 +18,21 @@ public enum AdminSQL {
 
 
      */
+public enum AdminSQL {
+
+    SELECTION_NOTICE_LIST("SELECT * FROM notice ORDER BY notice_no DESC"),
 
 
 
+    ;
+
+    private final String query;
+
+    AdminSQL(String query) {
+        this.query = query;
+    }
+
+    public String getQuery() {
+        return query;
+    }
 }
