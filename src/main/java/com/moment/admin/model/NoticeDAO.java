@@ -31,7 +31,7 @@ public class NoticeDAO {
     }
 
     public void connect() {
-        cp.connect();
+        conn = cp.connect();
     }
 
     public void disconnect(PreparedStatement pstmt, Connection conn) {

@@ -26,17 +26,18 @@ public class ConnectionPool {
     }
 
     // TODO :  DataSource ds = (DataSource) ctx.lookup("jdbc/이부분"); = 이 부분에 반드시 context.xml 에 설정한 name 을 넣어야 함
-    public void connect( ) {
+    public Connection connect( ) {
 
         try {
             Context initCtx = new InitialContext();
             Context ctx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) ctx.lookup("jdbc/mymaria");
+            DataSource ds = (DataSource) ctx.lookup("jdbc/maria");
             conn = ds.getConnection();
 
         } catch (Exception e) {
             System.out.println("DB 연결 실패" + e);
         }
+        return conn;
     }
 
     public void disconnect(ResultSet rs, PreparedStatement pstmt, Connection conn) {
