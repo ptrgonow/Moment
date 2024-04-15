@@ -19,6 +19,7 @@ public class AdminDAO {
     ConnectionPool cp = null;
 
     private AdminDAO() {
+
         cp = ConnectionPool.getInstance();
     }
 
@@ -42,8 +43,8 @@ public class AdminDAO {
     }
 
     public List<AdminDTO> getNoticeList() throws SQLException {
-        List<AdminDTO> list = new ArrayList<>();
 
+        List<AdminDTO> list = new ArrayList<>();
         connect();
 
         pstmt = conn.prepareStatement(AdminSQL.SELECTION_NOTICE_LIST.getQuery());
@@ -51,10 +52,10 @@ public class AdminDAO {
 
         while (rs.next()) {
             AdminDTO dto = new AdminDTO();
-            dto.setNotice_no(rs.getInt("notice_no"));
-            dto.setNotice_title(rs.getString("notice_title"));
-            dto.setNotice_cont(rs.getString("notice_cont"));
-            dto.setNotice_date(rs.getString("notice_date"));
+            dto.setNoticeNo(rs.getInt("notice_no"));
+            dto.setNoticeTitle(rs.getString("notice_title"));
+            dto.setNoticeCont(rs.getString("notice_cont"));
+            dto.setNoticeDate(rs.getString("notice_date"));
             list.add(dto);
         }
 

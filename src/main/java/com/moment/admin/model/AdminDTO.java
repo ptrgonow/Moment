@@ -2,49 +2,49 @@ package com.moment.admin.model;
 
 public class AdminDTO {
 
-    private int notice_no;
-    private String notice_title;
-    private String notice_writer;
-    private String notice_cont;
-    private String notice_date;
+    private int noticeNo;
+    private String noticeTitle;
+    private String noticeWriter;
+    private String noticeCont;
+    private String noticeDate;
 
-    public int getNotice_no( ) {
-        return notice_no;
+    public int getNoticeNo( ) {
+        return noticeNo;
     }
 
-    public void setNotice_no(int notice_no) {
-        this.notice_no = notice_no;
+    public void setNoticeNo(int noticeNo) {
+        this.noticeNo = noticeNo;
     }
 
-    public String getNotice_title( ) {
-        return notice_title;
+    public String getNoticeTitle( ) {
+        return noticeTitle;
     }
 
-    public void setNotice_title(String notice_title) {
-        this.notice_title = notice_title;
+    public void setNoticeTitle(String noticeTitle) {
+        this.noticeTitle = noticeTitle;
     }
 
-    public String getNotice_writer( ) {
-        return notice_writer;
+    public String getNoticeWriter( ) {
+        return noticeWriter;
     }
 
-    public void setNotice_writer(String notice_writer) {
-        this.notice_writer = notice_writer;
+    public void setNoticeWriter(String noticeWriter) {
+        this.noticeWriter = noticeWriter;
     }
 
-    public String getNotice_cont( ) {
-        return notice_cont;
+    public String getNoticeCont( ) {
+        return noticeCont;
     }
 
-    public void setNotice_cont(String notice_cont) {
-        this.notice_cont = notice_cont;
+    public void setNoticeCont(String noticeCont) {
+        this.noticeCont = noticeCont;
     }
 
-    public String getNotice_date( ) {
-        return notice_date;
+    public String getNoticeDate( ) {
+        return noticeDate;
     }
 
-    public void setNotice_date(String notice_date) {
-        this.notice_date = notice_date;
+    public void setNoticeDate(String noticeDate) {
+        this.noticeDate = noticeDate;
     }
 }
