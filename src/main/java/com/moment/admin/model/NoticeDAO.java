@@ -65,4 +65,68 @@ public class NoticeDAO {
 
         return list;
     }
+
+    public int insertNotice(NoticeDTO dto) {
+
+        int result = 0;
+        int noticeNo = 0;
+        connect();
+
+        try {
+            pstmt = conn.prepareStatement(AdminSQL.SELECTION_MAX_NOTICE_NO.getQuery());
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                noticeNo = rs.getInt(1);
+            }
+
+            pstmt = conn.prepareStatement(AdminSQL.INSERT_NOTICE.getQuery());
+            pstmt.setInt(1, noticeNo);
+            pstmt.setString(2, dto.getNoticeTitle());
+            pstmt.setString(3, dto.getNoticeWriter());
+            pstmt.setString(4, dto.getNoticeCont());
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("등록 에러 : " + e);
+        } finally {
+            disconnect(pstmt, conn);
+        }
+        return result;
+    }
+
+    public int deleteNotice(int noticeNo) {
+
+        int result = 0;
+        connect();
+
+        try {
+            pstmt = conn.prepareStatement(AdminSQL.DELETE_NOTICE.getQuery());
+            pstmt.setInt(1, noticeNo);
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("삭제 에러 : " + e);
+        } finally {
+            disconnect(pstmt, conn);
+        }
+
+        return result;
+    }
+
+    public void updateSequence(int noticeNo) {
+
+            connect();
+
+            try {
+                pstmt = conn.prepareStatement(AdminSQL.UPDATE_NOTICE.getQuery());
+                pstmt.setInt(1, noticeNo);
+                pstmt.executeUpdate();
+
+            } catch (SQLException e) {
+                System.out.println("번호 조정 에러 : " + e);
+            } finally {
+                disconnect(pstmt, conn);
+            }
+    }
 }

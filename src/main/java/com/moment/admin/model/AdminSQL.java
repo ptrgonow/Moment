@@ -24,9 +24,15 @@ public enum AdminSQL {
 
     SELECTION_NOTICE_LIST("SELECT * FROM notice ORDER BY notice_no DESC"),
 
+    SELECTION_MAX_NOTICE_NO("SELECT IFNULL(MAX(notice_no), 0) + 1 FROM notice"),
 
+    INSERT_NOTICE("INSERT INTO notice VALUES (?, ?, ?, ?, now())"),
 
-    ;
+    DELETE_NOTICE("DELETE FROM notice WHERE notice_no = ?"),
+
+    UPDATE_NOTICE("UPDATE notice SET notice_no = notice_no - 1 WHERE notice_no > ?"),
+ ;
+
 
     private final String query;
 
