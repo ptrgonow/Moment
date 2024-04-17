@@ -29,7 +29,7 @@ public class AdminDAO {
     }
 
     public void connect() {
-        cp.connect();
+        conn = cp.connect();
     }
 
     public void disconnect(PreparedStatement pstmt, Connection conn) {

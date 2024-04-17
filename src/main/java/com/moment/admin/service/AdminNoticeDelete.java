@@ -16,9 +16,9 @@ public class AdminNoticeDelete implements Action {
 
         NoticeDAO dao = NoticeDAO.getInstance();
         int result = dao.deleteNotice(noticeNo);
-        dao.updateSequence(noticeNo);
 
         if (result > 0) {
+            dao.updateSequence(noticeNo);
             System.out.println("공지사항 삭제 성공");
         } else {
             System.out.println("공지사항 삭제 실패");

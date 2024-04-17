@@ -1,7 +1,6 @@
 
 let currentEditingId = null; // 현재 편집 중인 공지 ID를 저장
 let isFormAdded = false; // 폼이 추가되었는지 확인하는 변수를 초기화합니다.
-
 // 페이지가 로드될 때 사이드바의 상태를 설정합니다.
 
 const sideMenu = document.querySelector('aside');
@@ -76,7 +75,9 @@ for (let i = 0; i < links.length; i++) {
         this.classList.add('active');
     });
 }
-$('.notice_tbl').hide();
+
+
+/*
 
 $('aside .sidebar a').click(function() {
     if ($(this).find('h3').text() === '공지') {
@@ -87,6 +88,25 @@ $('aside .sidebar a').click(function() {
     }
 });
 
+*/
+
+$('.notice_tbl').hide();
+
+
+$('aside .sidebar a').click(function() {
+    const text = $(this).find('h3').text();
+    switch (text) {
+        case '공지':
+            $('.notice_tbl').show();
+            break;
+        case '회원':
+            $().show();
+            break
+        default:
+            $('.notice_tbl').hide();
+            break;
+    }
+});
 
 $(document).ready(function() {
 
@@ -99,6 +119,7 @@ $(document).ready(function() {
                         <th>글 번호</th>
                         <th>제목</th>
                         <th>내용</th>
+                        <th>작성자</th>
                         <th>작성일</th>
                         <th>수정</th>
                         <th>삭제</th>
@@ -162,7 +183,8 @@ $(document).ready(function() {
         const row = $(this).closest('tr');
         $('#noticeForm').find('.sub-title').text('공지 수정');
         $('#noticeForm').find('.insertTitle').val(row.find('td:nth-child(2)').text());
-        $('#noticeForm').find('.insertCont').val(row.find('td:nth-child(3)').text());
+        $('#noticeForm').find('.insertWriter').val(row.find('td:nth-child(3)').text());
+        $('#noticeForm').find('.insertCont').val(row.find('td:nth-child(4)').text());
         $('#noticeForm').find('.submit-btn').val('수정');
         $('#noticeForm').data('noticeNo', row.find('td:first').text());
         $('.notice-sub_tbl').show();
@@ -194,6 +216,7 @@ $(document).ready(function() {
 
     function clearNoticeForm() {
         $('#noticeForm').find('.insertTitle').val('');
+        $('#noticeForm').find('.insertWriter').val('');
         $('#noticeForm').find('.insertCont').val('');
         $('#noticeForm').find('.submit-btn').val('등록');
         $('#noticeForm').data('noticeNo', null); // 폼 관련 데이터도 초기화
@@ -220,11 +243,12 @@ function getNoticeList() {
         success: function(data) {
             const tbody = $('.notice_tbl table tbody');
             tbody.empty();
-            $.each(data, function(index, {noticeCont, noticeDate, noticeNo, noticeTitle}) {
+            $.each(data, function(index, {noticeCont, noticeWriter, noticeDate, noticeNo, noticeTitle}) {
                 tbody.append(`
                     <tr>
                         <td>${noticeNo}</td>
                         <td>${noticeTitle}</td>
+                        <td>${noticeWriter}</td>
                         <td>${noticeCont}</td>
                         <td>${noticeDate}</td>
                         <td><button class="noticeUpdate main">수정</button></td>
@@ -265,5 +289,5 @@ function getNoticeList() {
             }
         });
     });
-
+// =================================================================
 }

@@ -14,11 +14,13 @@ public class AdminNoticeUpdate implements Action {
 
         int noticeNo = Integer.parseInt(request.getParameter("noticeNo").trim());
         String insertTitle = request.getParameter("insertTitle").trim();
+        String insertWriter = request.getParameter("insertWriter").trim();
         String insertCont = request.getParameter("insertCont").trim();
 
         NoticeDTO dto = new NoticeDTO();
         dto.setNoticeNo(noticeNo);
         dto.setNoticeTitle(insertTitle);
+        dto.setNoticeWriter(insertWriter);
         dto.setNoticeCont(insertCont);
 
         NoticeDAO dao = NoticeDAO.getInstance();

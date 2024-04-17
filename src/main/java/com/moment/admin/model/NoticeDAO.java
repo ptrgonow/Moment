@@ -55,6 +55,7 @@ public class NoticeDAO {
             dto = new NoticeDTO();
             dto.setNoticeNo(rs.getInt("notice_no"));
             dto.setNoticeTitle(rs.getString("notice_title"));
+            dto.setNoticeWriter(rs.getString("notice_writer"));
             dto.setNoticeCont(rs.getString("notice_cont"));
             dto.setNoticeDate(rs.getString("notice_date"));
 
@@ -137,14 +138,11 @@ public class NoticeDAO {
 
         try {
             pstmt = conn.prepareStatement(AdminSQL.UPDATE_NOTICE_CONTENT.getQuery());
-            // logging
-            System.out.println("dto.getNoticeTitle() = " + dto.getNoticeTitle());
-            System.out.println("dto.getNoticeCont() = " + dto.getNoticeCont());
-            System.out.println("dto.getNoticeNo() = " + dto.getNoticeNo());
 
             pstmt.setString(1, dto.getNoticeTitle());
-            pstmt.setString(2, dto.getNoticeCont());
-            pstmt.setInt(3, dto.getNoticeNo());
+            pstmt.setString(2, dto.getNoticeWriter());
+            pstmt.setString(3, dto.getNoticeCont());
+            pstmt.setInt(4, dto.getNoticeNo());
             result = pstmt.executeUpdate();
 
         } catch (SQLException e) {
