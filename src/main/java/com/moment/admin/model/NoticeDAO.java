@@ -19,8 +19,8 @@ public class NoticeDAO {
     ConnectionPool cp = null;
 
     private NoticeDAO() {
-
         cp = ConnectionPool.getInstance();
+
     }
 
     public static NoticeDAO getInstance() {
@@ -116,17 +116,43 @@ public class NoticeDAO {
 
     public void updateSequence(int noticeNo) {
 
-            connect();
+        connect();
 
-            try {
-                pstmt = conn.prepareStatement(AdminSQL.UPDATE_NOTICE.getQuery());
-                pstmt.setInt(1, noticeNo);
-                pstmt.executeUpdate();
+        try {
+            pstmt = conn.prepareStatement(AdminSQL.UPDATE_NOTICE_NO.getQuery());
+            pstmt.setInt(1, noticeNo);
+            pstmt.executeUpdate();
 
-            } catch (SQLException e) {
-                System.out.println("번호 조정 에러 : " + e);
-            } finally {
-                disconnect(pstmt, conn);
-            }
+        } catch (SQLException e) {
+            System.out.println("번호 조정 에러 : " + e);
+        } finally {
+            disconnect(pstmt, conn);
+        }
+    }
+
+    public int updateNotice(NoticeDTO dto) {
+
+        int result = 0;
+        connect();
+
+        try {
+            pstmt = conn.prepareStatement(AdminSQL.UPDATE_NOTICE_CONTENT.getQuery());
+            // logging
+            System.out.println("dto.getNoticeTitle() = " + dto.getNoticeTitle());
+            System.out.println("dto.getNoticeCont() = " + dto.getNoticeCont());
+            System.out.println("dto.getNoticeNo() = " + dto.getNoticeNo());
+
+            pstmt.setString(1, dto.getNoticeTitle());
+            pstmt.setString(2, dto.getNoticeCont());
+            pstmt.setInt(3, dto.getNoticeNo());
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("수정 에러 : " + e);
+        } finally {
+            disconnect(pstmt, conn);
+        }
+
+        return result;
     }
 }

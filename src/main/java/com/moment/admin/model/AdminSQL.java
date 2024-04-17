@@ -30,8 +30,12 @@ public enum AdminSQL {
 
     DELETE_NOTICE("DELETE FROM notice WHERE notice_no = ?"),
 
-    UPDATE_NOTICE("UPDATE notice SET notice_no = notice_no - 1 WHERE notice_no > ?"),
- ;
+    UPDATE_NOTICE_NO("UPDATE notice SET notice_no = notice_no - 1 WHERE notice_no > ?"),
+
+    UPDATE_NOTICE_CONTENT("UPDATE notice SET notice_title = ?, notice_cont = ? WHERE notice_no = ?")
+
+
+    ;
 
 
     private final String query;

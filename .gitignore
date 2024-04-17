@@ -241,3 +241,6 @@ Icon
 /mvnw
 /mvnw.cmd
 /pom.xml
+/src/main/resources/credentials.json
+/src/main/webapp/trash/
+/tokens/StoredCredential
