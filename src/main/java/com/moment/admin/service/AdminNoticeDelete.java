@@ -11,7 +11,7 @@ public class AdminNoticeDelete implements Action {
     @Override
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+        int noticeNo = Integer.parseInt(request.getParameter("noticeNo").trim());
         System.out.println("noticeNo : " + noticeNo);
 
         NoticeDAO dao = NoticeDAO.getInstance();

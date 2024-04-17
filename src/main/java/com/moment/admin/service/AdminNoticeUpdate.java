@@ -12,9 +12,9 @@ public class AdminNoticeUpdate implements Action {
     @Override
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-        String insertTitle = request.getParameter("insertTitle");
-        String insertCont = request.getParameter("insertCont");
+        int noticeNo = Integer.parseInt(request.getParameter("noticeNo").trim());
+        String insertTitle = request.getParameter("insertTitle").trim();
+        String insertCont = request.getParameter("insertCont").trim();
 
         NoticeDTO dto = new NoticeDTO();
         dto.setNoticeNo(noticeNo);

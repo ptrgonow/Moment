@@ -344,7 +344,7 @@ main .notice_tbl table:hover {
     box-shadow: none;
 }
 
-main .notice_tbl tbody a {
+main .notice_tbl tbody a.createNotice {
     display: flex;
     color: var(--clr-info-dark);
     gap: 1rem;
@@ -425,11 +425,12 @@ textarea:focus {
     cursor: pointer;
 }
 
-#noticeUpdate, #noticeDelete {
+.noticeUpdate, .noticeDelete {
+    background-color: var(--clr-white);
     cursor: pointer;
 }
 
-#noticeUpdate:hover, #noticeDelete:hover {
+.noticeUpdate:hover, .noticeDelete:hover {
     text-decoration: underline;
 }
 
@@ -577,7 +578,7 @@ Right Side
 }
 
 .right .sales-analytics .item .right h3 {
-    color: var(d);
+    color: var(--clr-dark);
 }
 
 .add_product div{
