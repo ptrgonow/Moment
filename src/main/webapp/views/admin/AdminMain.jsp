@@ -126,7 +126,7 @@
 
         <h1>Moment</h1>
         <div class="date">
-            <input type="date">
+            <input type="date" id="currentDate">
         </div>
         <%-- insight start --%>
         <div class="insights">
