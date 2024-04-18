@@ -1,3 +1,4 @@
+document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
 
 let currentEditingId = null; // 현재 편집 중인 공지 ID를 저장
 let isFormAdded = false; // 폼이 추가되었는지 확인하는 변수를 초기화합니다.
