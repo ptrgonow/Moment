@@ -77,25 +77,47 @@ for (let i = 0; i < links.length; i++) {
 }
 
 
+/*
 
 $('aside .sidebar a').click(function() {
     const text = $(this).find('h3').text();
     switch (text) {
+
         case '공지':
-            $('.notice_tbl').show();
-            $('.admin_tbl').hide();
-            /*$('.share_tbl').hide();*/
+            $('.notice-tbl').show();
+            $('.notice-sub-tbl').hide();
+            $('.admin-tbl').hide();
+            $('.admin-cont-tbl').hide();
             break;
         case '관리자 목록':
-            $('.notice_tbl').hide();
-            $('.admin_tbl').show();
-        /* case '다이어리':
-             $('.notice_tbl').hide();
-             $('.notice-sub_tbl').hide();
-             $('.share_tbl').show();
-             break;*/
+            $('.notice-tbl').hide();
+            $('.notice-sub-tbl').hide();
+            $('.admin-cont-tbl').hide();
+            $('.admin-tbl').show();
+            break;
         default:
-            /* $('.share_tbl').hide();*/
+            $('.notice-sub-tbl').hide();
+            $('.notice-tbl').hide();
+            $('.admin-tbl').hide();
+            $('.admin-cont-tbl').hide();
+            break;
+    }
+});
+*/
+
+function hideAll() {
+    $('.notice-tbl, .notice-sub-tbl, .admin-tbl, .admin-cont-tbl').hide();
+}
+
+$('aside .sidebar a').click(function() {
+    const text = $(this).find('h3').text();
+    hideAll();
+    switch (text) {
+        case '공지':
+            $('.notice-tbl').show();
+            break;
+        case '관리자 목록':
+            $('.admin-tbl').show();
             break;
     }
 });
@@ -105,7 +127,7 @@ $('aside .sidebar a').click(function() {
 $(document).ready(function () {
 
     const noticeTableTemplate = `
-        <div class="notice_tbl" style="display: none;">
+        <div class="notice-tbl" style="display: none;">
             <h1>공지사항</h1>
             <table>
                 <thead>
@@ -130,15 +152,13 @@ $(document).ready(function () {
     $('#insight-tbl-notice').html(noticeTableTemplate);
     getNoticeList();
 
-
-
     function getNoticeList() {
         $.ajax({
             url: 'admin_notice.go',
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                const tbody = $('.notice_tbl table tbody');
+                const tbody = $('.notice-tbl table tbody');
                 tbody.empty();
                 $.each(data, function (index, {noticeCont, noticeWriter, noticeDate, noticeNo, noticeTitle}) {
                     tbody.append(`
@@ -168,7 +188,7 @@ $(document).ready(function () {
 
     }
     const formTemplate = `
-        <div class="notice-sub_tbl" style="display: none;">
+        <div class="notice-sub-tbl" style="display: none;">
             <form id="noticeForm">
                 <table class="notice-sub">
                     <thead>
@@ -206,8 +226,7 @@ $(document).ready(function () {
         $('#noticeForm').data('noticeNo', null); // 폼 관련 데이터도 초기화
     }
 
-
-    $('.notice_tbl').after(formTemplate);
+    $('.notice-tbl').after(formTemplate);
 
     $(document).on('click', '.createNotice', function (e) {
         e.preventDefault();
@@ -217,7 +236,7 @@ $(document).ready(function () {
         $('#noticeForm').find('.insertCont').val('');
         $('#noticeForm').find('.submit-btn').val('등록');
         $('#noticeForm').data('noticeNo', null);
-        $('.notice-sub_tbl').show();
+        $('.notice-sub-tbl').show();
     });
 
     $(document).on('click', '.noticeUpdate', function () {
@@ -229,7 +248,7 @@ $(document).ready(function () {
         $('#noticeForm').find('.insertCont').val(row.find('td:nth-child(4)').text());
         $('#noticeForm').find('.submit-btn').val('수정');
         $('#noticeForm').data('noticeNo', row.find('td:first').text());
-        $('.notice-sub_tbl').show();
+        $('.notice-sub-tbl').show();
     });
 
     $('#noticeForm').submit(function (e) {
@@ -245,7 +264,7 @@ $(document).ready(function () {
             data: isUpdate ? formData + '&noticeNo=' + noticeNo : formData,
             success: function (data) {
                 alert('공지가 ' + (isUpdate ? '수정' : '등록') + ' 되었습니다.');
-                $('.notice-sub_tbl').hide(); // 폼 숨기기
+                $('.notice-sub-tbl').hide(); // 폼 숨기기
                 clearNoticeForm(); // 폼 초기화
                 getNoticeList(); // 공지 목록 업데이트
             },
@@ -259,13 +278,13 @@ $(document).ready(function () {
     $(document).on('click', '.reset-btn', function (e) {
         e.preventDefault();
         clearNoticeForm();
-        $('.notice-sub_tbl').hide(); // 폼의 부모 컨테이너를 숨김
+        $('.notice-sub-tbl').hide(); // 폼의 부모 컨테이너를 숨김
     });
 
     $(document).on('click', '.createNotice', function (e) {
         e.preventDefault();
         clearNoticeForm(); // 폼 초기화 및 새 공지 작성으로 설정
-        $('.notice-sub_tbl').show(); // 폼 보이기
+        $('.notice-sub-tbl').show(); // 폼 보이기
         console.log('폼 제출 완료');
     });
 
@@ -295,7 +314,7 @@ $(document).ready(function () {
 $(document).ready(function() {
 
     const memberTableTemplate = `
-        <div class="admin_tbl" style="display: none;">
+        <div class="admin-tbl" style="display: none;">
             <h1>관리자 목록</h1>
             <table>
                 <thead>
@@ -305,7 +324,6 @@ $(document).ready(function() {
                         <th>아이디</th>
                         <th>등급</th>
                         <th>팀</th>
-                        <th>삭제</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -316,53 +334,162 @@ $(document).ready(function() {
         </div>
     `;
 
+    const AdminContTemplate = `
+   
+        <div class="admin-cont-tbl" style="display: none;">
+            <h1>관리자 상세 정보</h1>
+            <table>
+                <tr>
+                    <th>이름</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>아이디</th>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <th>연락처</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>주소</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>생년월일</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>현재팀</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>관리등급</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input class="close-btn" type="button" value="닫기">
+                    </td>
+                </tr>
+            </table>
+        </div>
+       `;
+
     $('#insight-tbl-member').html(memberTableTemplate);
     getMemberList();
 
-function getMemberList() {
-    $.ajax({
-        url: 'admin_list.go',
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            const tbody = $('.admin_tbl table tbody');
-            tbody.empty();
-            $.each(data, function(index, {memberId, memberName, memberGrade, memberTeam, memberNo}) {
-                tbody.append(`
+    function getMemberList() {
+        $.ajax({
+            url: 'admin_list.go',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                const tbody = $('.admin-tbl table tbody');
+                tbody.empty();
+                $.each(data, function(index, {adminId, adminName, adminGrade, adminTeam, adminNo}) {
+                    tbody.append(`
                     <tr>
-                        <td>${memberNo}</td>
-                        <td><a href="admin_cont.go">${memberName}</a></td>
-                        <td>${memberId}</td>
-                        <td>${memberGrade}</td>
-                        <td>${memberTeam}</td>
+                        <td>${adminNo}</td>
+                        <td class="admin-cont">${adminName}</td>
+                        <td>${adminId}</td>
+                        <td>${adminGrade}</td>
+                        <td>${adminTeam}</td>
                     </tr>
                 `);
-            });
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log('Error loading member list: ' + textStatus + ' ' + errorThrown);
-        }
-    });
-
-
-    $(document).on('click', '.memberDelete', function() {
-        const memberNo = $(this).closest('tr').children('td:first').text();
-
-        $.ajax({
-            url: 'admin_member_delete.go',
-            type: 'POST',
-            data: { memberNo: memberNo },
-            success: function(data) {
-                alert('관리자가 성공적으로 삭제되었습니다.');
-                getMemberList();
+                });
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('관리자 삭제에 실패했습니다.');
-                console.log('Error: ' + textStatus + ' ' + errorThrown);
+                console.log('Error loading member list: ' + textStatus + ' ' + errorThrown);
             }
         });
-    });
-}
+
+
+        $('.admin-tbl').after(AdminContTemplate);
+
+        $('.admin-tbl table tbody').on('click', 'tr', function(e) {
+            e.preventDefault();
+            // 클릭된 행의 관리자 번호를 가져옵니다.
+            const adminNo = $(this).find('td:first').text();
+            // 관리자 상세 정보를 가져옵니다.
+            getAdminCont(adminNo);
+        });
+
+        function getAdminCont(adminNo) {
+            $.ajax({
+                url: 'admin_cont.go',
+                type: 'GET',
+                data: { adminNo: adminNo },
+                dataType: 'json',
+                success: function ({adminAddr, adminBirth, adminGrade, adminId, adminName, adminPhone, adminTeam}) {
+                    const values = [
+                        adminName, adminId, adminPhone, adminAddr, adminBirth, adminTeam, adminGrade
+                    ];
+                    // 서버로부터 받아온 관리자의 상세 정보를 HTML 템플릿에 채워 넣습니다.
+                    $('.admin-cont-tbl td').each(function(index) {
+                        $(this).text(values[index]);
+                        // 관리자 상세 정보 테이블을 보이게 합니다.
+                        $('.admin-tbl').hide();
+                        $('.admin-cont-tbl').show();
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('관리자 상세정보 호출 실패: ' + textStatus + ' ' + errorThrown);
+                }
+            });
+        }
+
+        $(document).on('click', '.close-btn', function() {
+            $('.admin-tbl').show();
+            $('.admin-cont-tbl').hide();
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $(document).on('click', '.memberDelete', function() {
+            const memberNo = $(this).closest('tr').children('td:first').text();
+
+            $.ajax({
+                url: 'admin_member_delete.go',
+                type: 'POST',
+                data: { memberNo: memberNo },
+                success: function(data) {
+                    alert('관리자가 성공적으로 삭제되었습니다.');
+                    getMemberList();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('관리자 삭제에 실패했습니다.');
+                    console.log('Error: ' + textStatus + ' ' + errorThrown);
+                }
+            });
+        });
+    }
 
 
 

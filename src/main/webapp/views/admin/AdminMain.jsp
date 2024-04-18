@@ -177,7 +177,8 @@
 
 
         <%-- insight start --%>
-        <div id="insight-tbl"></div>
+        <div id="insight-tbl-notice"></div>
+        <div id="insight-tbl-member"></div>
         <%-- insight end --%>
 
 

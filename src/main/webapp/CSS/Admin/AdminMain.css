@@ -272,22 +272,6 @@ main .insights > div:hover {
     box-shadow: none;
 }
 
-main .insights > div span i {
-    background: var(--clr-main);
-    padding: 0.5rem;
-    border-radius: 50%;
-    color: var(--clr-white);
-    font-size: 1rem;
-}
-
-main .insights > div.expenses span i {
-    background: var(--clr-danger);
-}
-
-main .insights > div.income span i {
-    background: var(--clr-success);
-}
-
 main .insights > div .middle {
     display: flex;
     align-items: center;
@@ -319,16 +303,16 @@ main .insights p {
         table section
 
 */
-main .notice_tbl {
+main .notice-tbl {
     display: none;
     margin-top: 2rem;
 }
 
-main .notice_tbl h2 {
+main .notice-tbl h1 {
     color: var(--clr-dark);
 }
 
-main .notice_tbl table {
+main .notice-tbl table {
     background-color: var(--clr-white);
     width: 85%;
     margin: 3rem auto;
@@ -340,11 +324,11 @@ main .notice_tbl table {
     color: var(--clr-dark);
 }
 
-main .notice_tbl table:hover {
+main .notice-tbl table:hover {
     box-shadow: none;
 }
 
-main .notice_tbl tbody a.createNotice {
+main .notice-tbl tbody span.createNotice {
     display: flex;
     color: var(--clr-info-dark);
     gap: 1rem;
@@ -353,9 +337,10 @@ main .notice_tbl tbody a.createNotice {
     height: 3.2rem;
     transition: all .1s ease-in;
     justify-content: flex-end;
+    cursor: pointer;
 }
 
-main .notice_tbl tbody a span {
+main .notice-tbl tbody span {
     font-size: 1.6rem;
     transition: all .1s ease-in;
 }
@@ -368,13 +353,17 @@ main table tbody td {
     height: 3.8rem;
 }
 
+.notice-sub-tbl {
+    position: relative;
+    height: 35vh;
+}
 
 #noticeForm table.notice-sub {
 
     position: relative;
     background-color: var(--clr-white);
     width: 65%;
-    height: auto;
+    height: 33vh;
     margin: 3rem auto;
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
@@ -391,23 +380,25 @@ main table tbody td {
 #noticeForm table.notice-sub tbody tr td input.insertTitle,
 #noticeForm table.notice-sub tbody tr td input.insertWriter {
 
-    width: 60%;
+    width: 85%;
     height: 2rem;
-    text-align: left;
+    text-align: justify;
     font-size: 1rem;
+    margin: 0 2rem 0 2rem;
     border-radius: var(--border-radius-1);
     border: 0;
     background-color: var(--clr-color-background);
 }
 
 #noticeForm textarea {
-    width: 60%;
+    width: 85%;
     font-size: 1rem;
-    margin: 2rem 0;
+    margin: 5rem 0 2rem 2rem;
     border-radius: var(--border-radius-1);
-    text-align: left;
+    text-align: justify;
     resize: none;
     background-color: var(--clr-color-background);
+    height: 100%;
 }
 
 textarea:focus {
@@ -416,13 +407,18 @@ textarea:focus {
 }
 
 .notice-btn {
-    width: 50px;
-    height: 40px;
     background-color: var(--clr-main);
-    color: var(--clr-white);
-    border-radius: var(--border-radius-1);
-    border: 0;
-    cursor: pointer;
+    color: var(--clr-dark); /* 버튼 텍스트 색을 흰색으로 설정 */
+    border-radius: var(--border-radius-1); /* 버튼의 모서리를 둥글게 설정 */
+    padding: 10px 20px; /* 버튼 내부의 패딩 설정 */
+    cursor: pointer; /* 마우스 커서를 포인터로 설정 */
+    border: none; /* 버튼 테두리 제거 */
+    font-size: 1rem; /* 폰트 크기 설정 */
+    transition: background-color 0.3s ease; /* 배경색 변경 시 애니메이션 효과 적용 */
+}
+
+.notice-btn:hover {
+    background-color: var(--clr-danger);
 }
 
 .noticeUpdate, .noticeDelete {
@@ -435,9 +431,77 @@ textarea:focus {
 }
 
 #no-btn {
+
     position: absolute;
-    right: 10px;
+    display: inline-grid;
+    right: 2rem;
     bottom: 0;
+}
+
+main .admin-tbl {
+    display: none;
+    margin-top: 2rem;
+}
+
+main .admin-tbl h1 {
+    color: var(--clr-dark);
+}
+
+main .admin-tbl table {
+    background-color: var(--clr-white);
+    width: 85%;
+    margin: 3rem auto;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+    color: var(--clr-dark);
+}
+
+main .admin-tbl table:hover {
+    box-shadow: none;
+}
+
+.admin-tbl table tbody td.admin-cont:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.close-btn {
+    background-color: var(--clr-main);
+    color: var(--clr-dark); /* 버튼 텍스트 색을 흰색으로 설정 */
+    border-radius: var(--border-radius-1); /* 버튼의 모서리를 둥글게 설정 */
+    padding: 10px 20px; /* 버튼 내부의 패딩 설정 */
+    cursor: pointer; /* 마우스 커서를 포인터로 설정 */
+    border: none; /* 버튼 테두리 제거 */
+    font-size: 1rem; /* 폰트 크기 설정 */
+    transition: background-color 0.3s ease; /* 배경색 변경 시 애니메이션 효과 적용 */
+}
+
+.close-btn:hover {
+    background-color: var(--clr-danger);
+}
+
+.admin-cont-tbl {
+    display: grid;
+    background-color: var(--clr-white);
+    width: 35%;
+    margin: 3rem auto;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+    color: var(--clr-dark);
+}
+
+.admin-cont-tbl:hover {
+    box-shadow: none;
+}
+
+.admin-cont-tbl tbody tr {
+    height: 3.8rem;
 }
 
 

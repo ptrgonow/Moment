@@ -33,6 +33,7 @@ public class ConnectionPool {
             Context ctx = (Context) initCtx.lookup("java:comp/env");
             DataSource ds = (DataSource) ctx.lookup("jdbc/maria");
             conn = ds.getConnection();
+            System.out.println("DB 연결 성공");
 
         } catch (Exception e) {
             System.out.println("DB 연결 실패" + e);
@@ -46,10 +47,10 @@ public class ConnectionPool {
             if (rs != null) rs.close();
             if (pstmt != null) pstmt.close();
             if (conn != null) conn.close();
-            System.out.println("연결 해제 성공");
+            System.out.println(" rs, pstmt, conn 연결 해제 성공");
 
         } catch (Exception e) {
-            System.out.println("연결 해제 실패" + e);
+            System.out.println(" rs, pstmt, conn 연결 해제 실패" + e);
         }
     }
 
@@ -58,9 +59,10 @@ public class ConnectionPool {
         try {
             if (pstmt != null) pstmt.close();
             if (conn != null) conn.close();
+            System.out.println(" pstmt, conn 연결 해제 성공");
 
         } catch (Exception e) {
-            System.out.println("연결 해제 실패" + e);
+            System.out.println(" pstmt, conn, 연결 해제 실패" + e);
         }
     }
 }

@@ -32,8 +32,11 @@ public enum AdminSQL {
 
     UPDATE_NOTICE_NO("UPDATE notice SET notice_no = notice_no - 1 WHERE notice_no > ?"),
 
-    UPDATE_NOTICE_CONTENT("UPDATE notice SET notice_title = ?, notice_writer = ?, notice_cont = ? WHERE notice_no = ?")
+    UPDATE_NOTICE_CONTENT("UPDATE notice SET notice_title = ?, notice_writer = ?, notice_cont = ? WHERE notice_no = ?"),
 
+    GET_ADMIN_LIST("SELECT * FROM admin"),
+
+    GET_ADMIN_CONT("SELECT * FROM admin WHERE admin_no = ?"),
 
     ;
 
