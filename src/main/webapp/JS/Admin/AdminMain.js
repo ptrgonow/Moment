@@ -337,7 +337,6 @@ $(document).ready(function() {
     const AdminContTemplate = `
    
         <div class="admin-cont-tbl" style="display: none;">
-            <h1>관리자 상세 정보</h1>
             <table>
                 <tr>
                     <th>이름</th>
