@@ -77,35 +77,6 @@ for (let i = 0; i < links.length; i++) {
     });
 }
 
-
-/*
-
-$('aside .sidebar a').click(function() {
-    const text = $(this).find('h3').text();
-    switch (text) {
-
-        case '공지':
-            $('.notice-tbl').show();
-            $('.notice-sub-tbl').hide();
-            $('.admin-tbl').hide();
-            $('.admin-cont-tbl').hide();
-            break;
-        case '관리자 목록':
-            $('.notice-tbl').hide();
-            $('.notice-sub-tbl').hide();
-            $('.admin-cont-tbl').hide();
-            $('.admin-tbl').show();
-            break;
-        default:
-            $('.notice-sub-tbl').hide();
-            $('.notice-tbl').hide();
-            $('.admin-tbl').hide();
-            $('.admin-cont-tbl').hide();
-            break;
-    }
-});
-*/
-
 function hideAll() {
     $('.notice-tbl, .notice-sub-tbl, .admin-tbl, .admin-cont-tbl').hide();
 }
@@ -135,8 +106,8 @@ $(document).ready(function () {
                     <tr>
                         <th>글 번호</th>
                         <th>제목</th>
-                        <th>내용</th>
                         <th>작성자</th>
+                        <th>내용</th>
                         <th>작성일</th>
                         <th>수정</th>
                         <th>삭제</th>
