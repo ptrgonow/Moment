@@ -22,6 +22,8 @@ package com.moment.admin.model;
      */
 public enum AdminSQL {
 
+    // 공지사항 쿼리
+
     SELECTION_NOTICE_LIST("SELECT * FROM notice ORDER BY notice_no DESC"),
 
     SELECTION_MAX_NOTICE_NO("SELECT IFNULL(MAX(notice_no), 0) + 1 FROM notice"),
@@ -34,9 +36,16 @@ public enum AdminSQL {
 
     UPDATE_NOTICE_CONTENT("UPDATE notice SET notice_title = ?, notice_writer = ?, notice_cont = ? WHERE notice_no = ?"),
 
+    // 관리자 목록
+
     GET_ADMIN_LIST("SELECT * FROM admin"),
 
     GET_ADMIN_CONT("SELECT * FROM admin WHERE admin_no = ?"),
+
+    // 관리자 로그인
+
+    ADMIN_LOGIN_CHECK("select * from admin where admin_Id = ?"),
+
 
     ;
 

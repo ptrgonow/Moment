@@ -179,6 +179,7 @@
         <%-- insight start --%>
         <div id="insight-tbl-notice"></div>
         <div id="insight-tbl-member"></div>
+        <div id="insight-tbl-share"></div>
         <%-- insight end --%>
 
 
@@ -199,12 +200,12 @@
             </div>
             <div class="profile">
                 <div class="info">
-                    <p><b>Babar</b></p>
-                    <p>Admin</p>
+                    <p><b>${sessionScope.adminName}</b></p>
+                    <p>${sessionScope.adminId}</p>
                     <small class="text-muted"></small>
                 </div>
                 <div class="profile-photo">
-                    <img src="/image/profile.png" height="50" width="50" alt=""/>
+                    <img src="/image/proooooooo.jpeg" height="50" width="50" alt=""/>
                 </div>
             </div>
         </div>
@@ -297,6 +298,7 @@
 <!-- Jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="<c:url value="/JS/Admin/AdminMain.js"/>"></script>
+<script src="<c:url value="/JS/Admin/AdminLogin.js"/>"></script>
 
 </body>
 </html>

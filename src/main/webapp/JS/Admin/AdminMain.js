@@ -78,15 +78,19 @@ for (let i = 0; i < links.length; i++) {
 }
 
 function hideAll() {
-    $('.notice-tbl, .notice-sub-tbl, .admin-tbl, .admin-cont-tbl').hide();
+    $('.notice-tbl, .notice-sub-tbl, .admin-tbl, .admin-cont-tbl, .share-tbl, .share-cont-tbl').hide();
 }
 
 $('aside .sidebar a').click(function() {
     const text = $(this).find('h3').text();
     hideAll();
     switch (text) {
+
         case '공지':
             $('.notice-tbl').show();
+            break;
+        case '다이어리':
+            $('.share-tbl').show();
             break;
         case '관리자 목록':
             $('.admin-tbl').show();
@@ -159,6 +163,7 @@ $(document).ready(function () {
         });
 
     }
+
     const formTemplate = `
         <div class="notice-sub-tbl" style="display: none;">
             <form id="noticeForm">
@@ -208,6 +213,7 @@ $(document).ready(function () {
         $('#noticeForm').find('.insertCont').val('');
         $('#noticeForm').find('.submit-btn').val('등록');
         $('#noticeForm').data('noticeNo', null);
+        $('.notice-tbl').hide();
         $('.notice-sub-tbl').show();
     });
 
@@ -220,6 +226,7 @@ $(document).ready(function () {
         $('#noticeForm').find('.insertCont').val(row.find('td:nth-child(4)').text());
         $('#noticeForm').find('.submit-btn').val('수정');
         $('#noticeForm').data('noticeNo', row.find('td:first').text());
+        $('.notice-tbl').hide();
         $('.notice-sub-tbl').show();
     });
 
@@ -280,7 +287,7 @@ $(document).ready(function () {
 });
 
 
-// =========================== 관리자 목록 ======================================
+// =========================== 관리자 목록 =================================
 
 
 $(document).ready(function() {
@@ -367,14 +374,13 @@ $(document).ready(function() {
                         <td>${adminGrade}</td>
                         <td>${adminTeam}</td>
                     </tr>
-                `);
+                    `);
                 });
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('Error loading member list: ' + textStatus + ' ' + errorThrown);
             }
         });
-
 
         $('.admin-tbl').after(AdminContTemplate);
 
@@ -415,34 +421,6 @@ $(document).ready(function() {
             $('.admin-cont-tbl').hide();
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $(document).on('click', '.memberDelete', function() {
             const memberNo = $(this).closest('tr').children('td:first').text();
 
@@ -468,7 +446,125 @@ $(document).ready(function() {
 
 
 
+});
 
+// =========================== 게시판 목록 =================================
 
+$(document).ready(function() {
 
+    // 공유 게시판 리스트 템플릿
+    const shareTableTemplate = `
+        <div class="share-tbl" style="display: none;">
+            <h1>게시글 목록</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>글 번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                </tbody>
+            </table>
+        </div>
+    `;
+    // 공유 게시판 상세정보 폼 템플릿
+    const shareContTemplate = `
+        <div class ="share-cont-tbl" style="display: none;">
+            <h1>게시글 상세 정보</h1>
+            <table>
+                <tr>
+                    <th>글 번호</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>제목</th>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <th>작성자</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>작성일</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input class="share-list-btn" type="button" value="목록">
+                        <input class="share-delete-btn" type="button" value="삭제">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    `;
+
+    $('#insight-tbl-share').html(shareTableTemplate);
+    getShareList();
+
+    function getShareList() {
+        $.ajax({
+            url: 'admin_board.go',
+            type: 'GET',
+            dateType: 'json',
+            success: function (data) {
+                const tbody = $('.share-tbl table tbody');
+                tbody.empty();
+                $.each(data, function (index, {boardNo, boardTitle, boardWriter, boardDate}) {
+
+                    tbody.append(`
+                    <tr>
+                        <td>${boardNo}</td>
+                        <td>${boardTitle}</td>
+                        <td>${boardWriter}</td>
+                        <td>${boardDate}</td>
+                        <td><input type="button" class="board-cont-btn" value="상세정보"></td>
+                    </tr>
+                    `);
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('Error loading member list: ' + textStatus + ' ' + errorThrown);
+            }
+        });
+
+        $('.share-tbl').after(shareContTemplate);
+
+        $('.share-tbl').on('click', '.board-cont-btn', function() {
+            // 클릭된 행의 첫 번째 셀(번호)의 텍스트를 가져옵니다.
+            const boardNo = $(this).closest('tr').find('td:first').text();
+            // 가져온 번호를 매개변수로 getShareCont 함수를 호출합니다.
+            getShareCont(boardNo);
+        });
+
+        function getShareCont(boardNo) {
+            $.ajax({
+                url: 'admin_board_cont.go',
+                type: 'GET',
+                data: { boardNo: boardNo },
+                dataType: 'json',
+                success: function ({boardNo, boardTitle, boardWriter, boardCont, boardDate}) {
+                    console.log(boardNo, boardTitle, boardWriter, boardDate);
+                    const values = [
+                        boardNo, boardTitle, boardWriter, boardCont, boardDate];
+                    $('.share-cont-tbl td').each(function (index){
+                        $(this).text(values[index]);
+                        $('.share-tbl').hide();
+                        $('.share-cont-tbl').show();
+                    });
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('상세 다이어리 호출 실패: ' + textStatus + ' ' + errorThrown);
+                }
+            });
+        }
+    }
 });

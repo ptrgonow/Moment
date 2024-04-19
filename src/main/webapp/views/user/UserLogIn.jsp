@@ -10,14 +10,10 @@
 <html>
 <head>
     <title>Title</title>
-    <!-- Include CSS file -->
-    <link rel="stylesheet" type="text/css" href="<c:url value="/CSS/User/UserLogIn.css"/>">
-
-    <!-- Include JavaScript file -->
-    <script src="<c:url value="/JS/User/UserLogIn.js"/>"></script>
 </head>
 <body>
 
+<h2>로그인 테스트 입니다</h2>
 
 <div class="login-container">
     <form action="user_login_action.go" method="post">
@@ -37,7 +33,12 @@
             </tr>
         </table>
     </form>
+    <input type="button" value="관리자" onclick="location.href='admin_login.go'">
 </div>
 
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="<c:url value="/JS/Admin/AdminLogin.js"/>"></script>
 </body>
 </html>
+

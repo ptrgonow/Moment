@@ -426,16 +426,19 @@ main .notice-sub-tbl textarea:focus {
     text-decoration: underline;
 }
 
-main .admin-tbl {
+main .admin-tbl,
+main .share-tbl {
     display: none;
     margin-top: 2rem;
 }
 
-main .admin-tbl h1 {
+main .admin-tbl h1,
+main .share-tbl h1 {
     color: var(--clr-dark);
 }
 
-main .admin-tbl table {
+main .admin-tbl table,
+main .share-tbl table {
     background-color: var(--clr-white);
     width: 85%;
     margin: 3rem auto;
@@ -447,7 +450,8 @@ main .admin-tbl table {
     color: var(--clr-dark);
 }
 
-main .admin-tbl table:hover {
+main .admin-tbl table:hover,
+main .share-tbl table:hover {
     box-shadow: none;
 }
 
@@ -471,7 +475,8 @@ main .admin-tbl table:hover {
     background-color: var(--clr-danger);
 }
 
-.admin-cont-tbl {
+.admin-cont-tbl,
+.share-cont-tbl {
     display: grid;
     background-color: var(--clr-white);
     width: 35%;
@@ -484,11 +489,13 @@ main .admin-tbl table:hover {
     color: var(--clr-dark);
 }
 
-.admin-cont-tbl:hover {
+.admin-cont-tbl:hover,
+.share-cont-tbl:hover {
     box-shadow: none;
 }
 
-.admin-cont-tbl tbody tr {
+.admin-cont-tbl tbody tr,
+.share-cont-tbl tbody tr {
     height: 3.8rem;
 }
 
@@ -506,9 +513,9 @@ Right Side
 }
 
 .right .top{
-    width: 224px;
+
     display: flex;
-    justify-content: start;
+    justify-content: end;
     gap: 2rem;
 }
 
@@ -742,7 +749,7 @@ MEDIA QUERY PHONE
         top: 0;
         left: 0;
         display: flex;
-        justify-content: center;
+        justify-content: end;
         align-items: center;
         padding: 0 0.8rem;
         background: var(--clr-white);
