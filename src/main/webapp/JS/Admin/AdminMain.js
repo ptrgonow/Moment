@@ -1,93 +1,77 @@
-document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
-
 let currentEditingId = null; // 현재 편집 중인 공지 ID를 저장
 let isFormAdded = false; // 폼이 추가되었는지 확인하는 변수를 초기화합니다.
 // 페이지가 로드될 때 사이드바의 상태를 설정합니다.
 
-const sideMenu = document.querySelector('aside');
-const menuBtn = document.querySelector('#menu_bar');
-const closeBtn = document.querySelector('#close_btn');
-const themeToggler = document.querySelector('.theme-toggler');
+// =========================== 화면 설정 ======================================
+document.addEventListener('DOMContentLoaded', (event) => {
+    const sideLinks = document.querySelectorAll('.sidebar .side-menu li a:not(.logout)');
+    const menuBar = document.querySelector('.content nav .bi.bi-list');
+    const sideBar = document.querySelector('.sidebar');
+    const searchBtn = document.querySelector('.content nav form .form-input button');
+    const searchBtnIcon = document.querySelector('.content nav form .form-input button .bi');
+    const searchForm = document.querySelector('.content nav form');
+    const toggler = document.getElementById('theme-toggle');
 
-window.onload = () => {
-    if (window.innerWidth <= 768) {
-        sideMenu.style.display = "none";
-    } else {
-        sideMenu.style.display = "block";
+    if(sideLinks) {
+        sideLinks.forEach(item => {
+            const li = item.parentElement;
+            item.addEventListener('click', () => {
+                sideLinks.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                })
+                li.classList.add('active');
+            })
+        });
     }
-};
 
-menuBtn.addEventListener('click', () => {
-    if (window.innerWidth <= 768) {
-        sideMenu.style.display = "block";
+    if(menuBar && sideBar) {
+        menuBar.addEventListener('click', () => {
+            sideBar.classList.toggle('close');
+        });
     }
-});
 
-closeBtn.addEventListener('click', () => {
-    if (window.innerWidth <= 768) {
-        sideMenu.style.display = "none";
+    if(searchBtn && searchBtnIcon && searchForm) {
+        searchBtn.addEventListener('click', function (e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                searchBtnIcon.classList.toggle('bi-search');
+                searchBtnIcon.classList.toggle('bi-x');
+            }
+        });
     }
-});
 
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        sideMenu.style.display = "block";
-    } else {
-        sideMenu.style.display = "none";
-    }
-});
-
-themeToggler.addEventListener('click',()=>{
-    document.body.classList.toggle('dark-theme-variables')
-    themeToggler.querySelector('span:nth-child(1)').classList.toggle('active')
-    themeToggler.querySelector('span:nth-child(2)').classList.toggle('active')
-
-    // 다크 모드가 활성화되어 있다면, localStorage 에 상태를 저장합니다.
-    if (document.body.classList.contains('dark-theme-variables')) {
-        localStorage.setItem('darkMode', 'false');
-    } else {
-        localStorage.setItem('darkMode', 'true');
-    }
-});
-
-// 페이지가 로드될 때 다크 모드 상태를 확인하고 적용합니다.
-window.onload = () => {
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.remove('dark-theme-variables');
-        themeToggler.querySelector('span:nth-child(1)').classList.add('active');
-        themeToggler.querySelector('span:nth-child(2)').classList.remove('active');
-    } else {
-        document.body.classList.add('dark-theme-variables');
-        themeToggler.querySelector('span:nth-child(1)').classList.remove('active');
-        themeToggler.querySelector('span:nth-child(2)').classList.add('active');
-    }
-};
-
-const links = document.querySelectorAll('aside .sidebar a');
-// 각 링크에 이벤트 리스너를 추가합니다.
-for (let i = 0; i < links.length; i++) {
-    links[i].addEventListener('click', function() {
-        // 먼저, 모든 링크에서 'active' 클래스를 제거합니다.
-        for (let i = 0; i < links.length; i++) {
-            links[i].classList.remove('active');
+    window.addEventListener('resize', () => {
+        if (window.innerWidth < 768) {
+            sideBar.classList.add('close');
+        } else {
+            sideBar.classList.remove('close');
         }
-
-        // 클릭된 링크에 'active' 클래스를 추가합니다.
-        this.classList.add('active');
+        if (window.innerWidth > 576) {
+            searchBtnIcon.classList.add('bi-search');
+            searchBtnIcon.classList.remove('bi-x');
+            searchForm.classList.remove('show');
+        }
     });
-}
+
+    if(toggler) {
+        toggler.addEventListener('change', function () {
+            document.body.classList.toggle('dark', this.checked);
+        });
+    }
+});
+
 
 function hideAll() {
-    $('.notice-tbl, .notice-sub-tbl, .admin-tbl, .admin-cont-tbl, .share-tbl, .share-cont-tbl').hide();
+    $('.notice-list, .notice-sub-tbl, .admin-tbl, .admin-cont-tbl,' +
+        '.share-tbl, .share-cont-tbl').hide();
 }
-
-$('aside .sidebar a').click(function() {
-    const text = $(this).find('h3').text();
+$('ul.side-menu a').click(function() {
+    const text = $(this).text();
     hideAll();
     switch (text) {
-
         case '공지':
-            $('.notice-tbl').show();
+            $('.notice-list').show();
             break;
         case '다이어리':
             $('.share-tbl').show();
@@ -95,37 +79,24 @@ $('aside .sidebar a').click(function() {
         case '관리자 목록':
             $('.admin-tbl').show();
             break;
+        // 추가적으로 필요한 경우에는 여기에 더 많은 case 문을 추가할 수 있습니다.
     }
 });
+
 
 // =========================== 공지 ======================================
 
 $(document).ready(function () {
 
-    const noticeTableTemplate = `
-        <div class="notice-tbl" style="display: none;">
-            <h1>공지사항</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>글 번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>내용</th>
-                        <th>작성일</th>
-                        <th>수정</th>
-                        <th>삭제</th>
-                    </tr>
-                </thead>
-                <tbody>
-                
-                </tbody>
-            </table>
-          
-        </div>
+    const noticeListTemplate = `
+    <div class="notice-list">
+        <h2>공지사항</h2>
+        <ul>
+        </ul>
+    </div>
     `;
 
-    $('#insight-tbl-notice').html(noticeTableTemplate);
+    $('#insight-tbl-notice').html(noticeListTemplate);
     getNoticeList();
 
     function getNoticeList() {
@@ -134,34 +105,36 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                const tbody = $('.notice-tbl table tbody');
-                tbody.empty();
+                const ul = $('.notice-list ul');
+                ul.empty();
                 $.each(data, function (index, {noticeCont, noticeWriter, noticeDate, noticeNo, noticeTitle}) {
-                    tbody.append(`
-                    <tr>
-                        <td>${noticeNo}</td>
-                        <td>${noticeTitle}</td>
-                        <td>${noticeWriter}</td>
-                        <td>${noticeCont}</td>
-                        <td>${noticeDate}</td>
-                        <td><button class="noticeUpdate main">수정</button></td>
-                        <td><button class="noticeDelete danger">삭제</button></td>
-                    </tr>
-                `);
+                    ul.append(`
+                        <li>
+                            <p class="noticeNo">${noticeNo}</p>
+                            <p class="noticeTitle">${noticeTitle}</p>
+                            <p class="noticeWriter">${noticeWriter}</p>
+                            <p class="noticeCont">${noticeCont}</p>
+                            <p class="noticeDate">${noticeDate}</p>
+                            <div>
+                                <button class="noticeUpdate main">수정</button>
+                                <button class="noticeDelete danger">삭제</button>
+                            </div>
+                        </li>
+                    `);
                 });
-                tbody.append(`
-                <tr>
-                    <td colspan="6">
-                        <span class="createNotice"><i class="bi bi-pencil-square"></i><h3>공지 작성</h3></span>
-                    </td>
-                </tr>
-            `);
+                ul.append(`
+                        <div class="createNotice">
+                             <li>
+                                <span><i class="bi bi-pencil-square"></i><p>공지 작성</p></span>
+                            </li>
+                        </div>
+                       
+                    `);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log('Error loading notice list: ' + textStatus + ' ' + errorThrown);
             }
         });
-
     }
 
     const formTemplate = `
@@ -205,7 +178,7 @@ $(document).ready(function () {
         $('.notice-sub').data('noticeNo', null); // 폼 관련 데이터도 초기화
     }
 
-    $('.notice-tbl').after(formTemplate);
+    $('.notice-list').after(formTemplate);
 
     $(document).on('click', '.createNotice', function (e) {
         e.preventDefault();
@@ -215,7 +188,7 @@ $(document).ready(function () {
         $('.notice-sub').find('.insertCont').val('');
         $('.notice-sub').find('.submit-btn').val('등록');
         $('.notice-sub').data('noticeNo', null);
-        $('.notice-tbl').hide();
+        $('.notice-list').hide();
         $('.notice-sub-tbl').show();
     });
 
@@ -228,7 +201,7 @@ $(document).ready(function () {
         $('.notice-sub').find('.insertCont').val(row.find('td:nth-child(4)').text());
         $('.notice-sub').find('.submit-btn').val('수정');
         $('.notice-sub').data('noticeNo', row.find('td:first').text());
-        $('.notice-tbl').hide();
+        $('.notice-list').hide();
         $('.notice-sub-tbl').show();
     });
 
@@ -260,7 +233,7 @@ $(document).ready(function () {
         e.preventDefault();
         clearNoticeForm();
         $('.notice-sub-tbl').hide();    // 폼의 부모 컨테이너를 숨김
-        $('.notice-tbl').show();        // 공지 목록을 보여줌
+        $('.notice-list').show();        // 공지 목록을 보여줌
     });
 
     $(document).on('click', '.createNotice', function (e) {

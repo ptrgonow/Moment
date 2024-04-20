@@ -26,274 +26,129 @@
     <!--  아이콘  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
-
-
 </head>
 
 
 <body>
 
-
 <div class="container">
+    <div class="sidebar">
+        <a href="#" class="logo">
+            <i class="bi bi-journal-bookmark"></i>
+            <div class="logo-name"><span>Our</span>Moment</div>
+        </a>
 
-    <%-- aside section start --%>
-    <aside>
+        <ul class="side-menu">
 
-        <%-- top start --%>
-        <div class="top">
-            <div class="logo">
-                <h2>c<span class="main">moment</span> </h2>
+            <li><a href="admin.go"><i class="bi bi-house"></i>홈</a></li>
+
+            <li><a href="#"><i class="bi bi-megaphone"></i>공지</a></li>
+
+            <li><a href="#"><i class="bi bi-cart4"></i>상점</a></li>
+
+            <li><a href="#"><i class="bi bi-people"></i>회원</a></li>
+
+            <li><a href="#"><i class="bi bi-journals"></i>다이어리</a></li>
+
+            <li> <a href="#"><i class="bi bi-person-vcard"></i>관리자 목록</a></li>
+
+            <li><a href="#"><i class="bi bi-person-add"></i>관리자 등록</a></li>
+
+            <li><a href="#"><i class="bi bi-person-dash"></i>관리자 삭제</a></li>
+
+        </ul>
+
+        <ul class="side-menu">
+            <li><a href="admin_logout.go" class="logout"><i class="bi bi-box-arrow-right"></i>로그아웃</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+
+        <nav>
+            <i class="bi bi-list"></i>
+            <form action="#" id="search-form">
+                <div class="form-input">
+                    <input type="search" placeholder="검색어를 입력하세요">
+                    <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+            <a href="#" class="notif">
+                <i class="bi bi-bell"></i>
+                <span class="count">12</span>
+            </a>
+            <p>${sessionScope.adminName}</p>
+            <a href="#" class="profile">
+                <img src="/image/proooooooo.jpeg" alt="">
+            </a>
+        </nav>
+
+        <!-- End of Navbar -->
+
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Moment</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="#">다이어리</a></li>
+                        /
+                        <li><a href="#" class="active">상점</a></li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="close" id="close_btn">
-                <span><i class="bi bi-x-lg"></i></span>
+            <!-- Insights -->
+            <ul class="insights">
+                <li>
+                    <span class="info">
+                        <h3>
+                            1,074
+                        </h3>
+                        <p>Paid Order</p>
+                    </span>
+                </li>
+                <li>
+                        <span class="info">
+                            <h3>
+                                3,944
+                            </h3>
+                            <p>Site Visit</p>
+                        </span>
+                </li>
+                <li>
+                        <span class="info">
+                            <h3>
+                                14,721
+                            </h3>
+                            <p>Searches</p>
+                        </span>
+                </li>
+                <li>
+                        <span class="info">
+                            <h3>
+                                $6,742
+                            </h3>
+                            <p>Total Sales</p>
+                        </span>
+                </li>
+            </ul>
+            <!-- End of Insights -->
+
+            <div class="bottom-data">
+                <div id="insight-tbl-notice"></div>
+                <div id="insight-tbl-member"></div>
+                <div id="insight-tbl-share"></div>
             </div>
-        </div>
 
-        <%-- top end --%>
-
-        <div class="sidebar">
-
-            <a href="admin.go">
-                <span><i class="bi bi-house"></i></span>
-                <h3>홈</h3>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-megaphone"></i></span>
-                <h3>공지</h3>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-cart4"></i></span>
-                <h3>상점</h3>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-people"></i></span>
-                <h3>회원</h3>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-graph-up"></i></span>
-                <h3>분석</h3>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-journals"></i></span>
-                <h3>다이어리</h3>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-chat-right-dots"></i></span>
-                <h3>메세지</h3>
-                <span class="msg_count">15</span>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-person-vcard"></i></span>
-                <h3>관리자 목록</h3>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-person-add"></i></span>
-                <h3>관리자 등록</h3>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-person-dash"></i></span>
-                <h3>관리자 삭제</h3>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-gear"></i></span>
-                <h3>설정</h3>
-            </a>
-
-            <a href="#">
-                <span><i class="bi bi-box-arrow-right"></i></span>
-                <h3>로그아웃</h3>
-            </a>
-
-        </div>
-
-    </aside>
-    <%-- aside section end --%>
-
-
-    <%-- Main section start (Ajax)--%>
-    <main>
-
-        <h1>Moment</h1>
-        <div class="date">
-            <input type="date" id="currentDate">
-        </div>
-        <%-- insight start --%>
-        <div class="insights">
-
-            <%-- selling start --%>
-            <div class="sales">
-                <span><i class="bi bi-graph-up-arrow"></i></span>
-                <div class="middle">
-                    <div class="left">
-                        <h3>총 판매액</h3>
-                        <h1>2,954,500원</h1>
-                    </div>
-
-                </div>
-                <small>Last 24 Hours</small>
+            <!-- Reminders -->
+            <div class="reminders">
             </div>
-            <%-- selling end --%>
-
-            <%-- selling start --%>
-            <div class="expenses">
-                <span><i class="bi bi-bag"></i></span>
-                <div class="middle">
-                    <div class="left">
-                        <h3>지출액</h3>
-                        <h1>1,164,500원</h1>
-                    </div>
-
-                </div>
-                <small>Last 24 Hours</small>
-            </div>
-            <%-- selling end --%>
-
-            <%-- selling start --%>
-            <div class="income">
-                <span><i class="bi bi-cash-coin"></i></span>
-                <div class="middle">
-                    <div class="left">
-                        <h3>순 이익</h3>
-                        <h1>455,500원</h1>
-                    </div>
-
-                </div>
-                <small>Last 24 Hours</small>
-            </div>
-            <%-- selling end --%>
-        </div>
-        <%-- insight end --%>
-
-
-        <%-- insight start --%>
-        <div id="insight-tbl-notice"></div>
-        <div id="insight-tbl-member"></div>
-        <div id="insight-tbl-share"></div>
-        <%-- insight end --%>
-
-
-    </main>
-    <%-- Main section end --%>
-
-
-    <%-- right section start --%>
-    <div class="right">
-        <div class="top">
-            <button id="menu_bar">
-                <span><i class="bi bi-three-dots"></i></span>
-            </button>
-
-            <div class="theme-toggler">
-                <span class="active"><i class="bi bi-brightness-high"></i></span>
-                <span><i class="bi bi-moon"></i></span>
-            </div>
-            <div class="profile">
-                <div class="info">
-                    <p><b>${sessionScope.adminName}</b></p>
-                    <p>${sessionScope.adminId}</p>
-                    <small class="text-muted"></small>
-                </div>
-                <div class="profile-photo">
-                    <img src="/image/proooooooo.jpeg" height="50" width="50" alt=""/>
-                </div>
-            </div>
-        </div>
-
-        <div class="recent_updates">
-            <h2>Recent Update</h2>
-            <div class="updates">
-                <div class="update">
-                    <div class="profile-photo">
-                        <img src="/image/profile.png" height="50" width="50" alt=""/>
-                    </div>
-                    <div class="message">
-                        <p><b>Babar</b> Received his order of USB</p>
-                    </div>
-                </div>
-                <div class="update">
-                    <div class="profile-photo">
-                        <img src="/image/profile.png" height="50" width="50" alt=""/>
-                    </div>
-                    <div class="message">
-                        <p><b>Ali</b> Received his order of USB</p>
-                    </div>
-                </div>
-                <div class="update">
-                    <div class="profile-photo">
-                        <img src="/image/profile.png" height="50" width="50" alt=""/>
-                    </div>
-                    <div class="message">
-                        <p><b>amazon</b> Received his order of USB</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="sales-analytics">
-            <h2>Sales Analytics</h2>
-
-            <div class="item online">
-                <div class="icon">
-                    <span><i class="bi bi-cart4"></i></span>
-                </div>
-                <div class="right_text">
-                    <div class="info">
-                        <h3>주문</h3>
-                        <small class="text-muted">Last seen 2 Hours</small>
-                    </div>
-                    <h5 class="danger">-17%</h5>
-                    <h3>3849</h3>
-                </div>
-            </div>
-            <div class="item online">
-                <div class="icon">
-                    <span><i class="bi bi-cart4"></i></span>
-                </div>
-                <div class="right_text">
-                    <div class="info">
-                        <h3>주문</h3>
-                        <small class="text-muted">Last seen 2 Hours</small>
-                    </div>
-                    <h5 class="success">-17%</h5>
-                    <h3>3849</h3>
-                </div>
-            </div>
-            <div class="item online">
-                <div class="icon">
-                    <span><i class="bi bi-cart4"></i></span>
-                </div>
-                <div class="right_text">
-                    <div class="info">
-                        <h3>주문</h3>
-                        <small class="text-muted">Last seen 2 Hours</small>
-                    </div>
-                    <h5 class="danger">-17%</h5>
-                    <h3>3849</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="item add_product">
-            <div>
-                <span class="material-symbols-sharp">add</span>
-            </div>
-        </div>
-
+            <!-- End of Reminders-->
+        </main>
     </div>
 </div>
-<%-- right section end --%>
 
 <!-- Jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

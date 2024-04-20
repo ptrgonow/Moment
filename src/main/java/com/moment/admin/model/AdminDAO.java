@@ -8,18 +8,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class AdminDAO {
 
     private static AdminDAO instance = null;
-
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
     ConnectionPool cp = null;
 
     private AdminDAO() {
-
         cp = ConnectionPool.getInstance();
     }
 
@@ -30,98 +24,72 @@ public class AdminDAO {
         return instance;
     }
 
-    public void connect() {
-        conn = cp.connect();
+    private AdminDTO createAdminDTO(ResultSet rs) throws Exception {
+        AdminDTO dto = new AdminDTO();
+        dto.setAdminNo(rs.getInt("admin_no"));
+        dto.setAdminId(rs.getString("admin_id"));
+        dto.setAdminPwd(rs.getString("admin_pwd"));
+        dto.setAdminName(rs.getString("admin_name"));
+        dto.setAdminPhone(rs.getString("admin_phone"));
+        dto.setAdminAddr(rs.getString("admin_addr"));
+        dto.setAdminBirth(rs.getString("admin_birth"));
+        dto.setAdminGrade(rs.getString("admin_grade"));
+        dto.setAdminTeam(rs.getString("admin_team"));
+        return dto;
     }
 
-    public void disconnect(PreparedStatement pstmt, Connection conn) {
-        cp.disconnect(pstmt, conn);
+    private PreparedStatement createPreparedStatement(Connection conn, String query, Object... parameters) throws Exception {
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        for (int i = 0; i < parameters.length; i++) {
+            pstmt.setObject(i + 1, parameters[i]);
+        }
+        return pstmt;
     }
 
-    public void disconnect(ResultSet rs, PreparedStatement pstmt, Connection conn) {
-        cp.disconnect(rs, pstmt, conn);
-    }
-
-    public List<AdminDTO> getAdminList( ) {
-
+    public List<AdminDTO> getAdminList() {
         List<AdminDTO> list = new ArrayList<>();
-        AdminDTO dto = null;
-        connect();
-
-        try {
-            pstmt = conn.prepareStatement(AdminSQL.GET_ADMIN_LIST.getQuery());
-            rs = pstmt.executeQuery();
+        try (Connection conn = cp.connect();
+             PreparedStatement pstmt = createPreparedStatement(conn, AdminSQL.GET_ADMIN_LIST.getQuery());
+             ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                dto = new AdminDTO();
-                dto.setAdminNo(rs.getInt("admin_no"));
-                dto.setAdminId(rs.getString("admin_id"));
-                dto.setAdminPwd(rs.getString("admin_pwd"));
-                dto.setAdminName(rs.getString("admin_name"));
-                dto.setAdminPhone(rs.getString("admin_phone"));
-                dto.setAdminAddr(rs.getString("admin_addr"));
-                dto.setAdminBirth(rs.getString("admin_birth"));
-                dto.setAdminGrade(rs.getString("admin_grade"));
-                dto.setAdminTeam(rs.getString("admin_team"));
-
-                list.add(dto);
+                list.add(createAdminDTO(rs));
             }
 
         } catch (Exception e) {
             System.out.println("getAdminList() 에러 : " + e);
-        } finally {
-            disconnect(rs, pstmt, conn);
         }
 
         return list;
     }
 
     public AdminDTO getAdminCont(int adminNo) {
-
         AdminDTO dto = null;
-        connect();
 
-        try {
-            pstmt = conn.prepareStatement(AdminSQL.GET_ADMIN_CONT.getQuery());
-            pstmt.setInt(1, adminNo);
-            rs = pstmt.executeQuery();
+        try (Connection conn = cp.connect();
+             PreparedStatement pstmt = createPreparedStatement(conn, AdminSQL.GET_ADMIN_CONT.getQuery(), adminNo);
+             ResultSet rs = pstmt.executeQuery()) {
 
             if (rs.next()) {
-
-                dto = new AdminDTO();
-                dto.setAdminNo(rs.getInt("admin_no"));
-                dto.setAdminId(rs.getString("admin_id"));
-                dto.setAdminPwd(rs.getString("admin_pwd"));
-                dto.setAdminName(rs.getString("admin_name"));
-                dto.setAdminPhone(rs.getString("admin_phone"));
-                dto.setAdminAddr(rs.getString("admin_addr"));
-                dto.setAdminBirth(rs.getString("admin_birth"));
-                dto.setAdminGrade(rs.getString("admin_grade"));
-                dto.setAdminTeam(rs.getString("admin_team"));
+                dto = createAdminDTO(rs);
             }
+
         } catch (Exception e) {
             System.out.println("getAdminCont() 에러 : " + e);
-        } finally {
-            disconnect(rs, pstmt, conn);
         }
 
         return dto;
     }
 
     public int adminCheck(String adminId, String adminPwd) {
-
         int result = 0;
-        connect();
 
-        try {
+        try (Connection conn = cp.connect();
+             PreparedStatement pstmt = createPreparedStatement(conn, AdminSQL.ADMIN_LOGIN_CHECK.getQuery(), adminId);
+             ResultSet rs = pstmt.executeQuery()) {
 
-            pstmt = conn.prepareStatement(AdminSQL.ADMIN_LOGIN_CHECK.getQuery());
-            pstmt.setString(1, adminId);
-            rs = pstmt.executeQuery();
-
-            if(rs.next()) {
-
-                if(adminPwd.equals(rs.getString("admin_pwd"))) {
+            if (rs.next()) {
+                if (adminPwd.equals(rs.getString("admin_pwd"))) {
                     result = 1;
                 } else {
                     result = -1;
@@ -130,41 +98,26 @@ public class AdminDAO {
 
         } catch (Exception e) {
             System.out.println("adminCheck() 에러 : " + e);
-        }finally {
-            disconnect(rs, pstmt, conn);
         }
+
         return result;
     }
 
     public AdminDTO getAdmin(String adminId) {
-
         AdminDTO dto = null;
-        connect();
 
-        try {
+        try (Connection conn = cp.connect();
+             PreparedStatement pstmt = createPreparedStatement(conn, AdminSQL.ADMIN_LOGIN_CHECK.getQuery(), adminId);
+             ResultSet rs = pstmt.executeQuery()) {
 
-            pstmt = conn.prepareStatement(AdminSQL.ADMIN_LOGIN_CHECK.getQuery());
-            pstmt.setString(1, adminId);
-            rs = pstmt.executeQuery();
-
-            if(rs.next()) {
-
-                dto = new AdminDTO();
-                dto.setAdminNo(rs.getInt("admin_no"));
-                dto.setAdminId(rs.getString("admin_id"));
-                dto.setAdminPwd(rs.getString("admin_pwd"));
-                dto.setAdminName(rs.getString("admin_name"));
-                dto.setAdminPhone(rs.getString("admin_phone"));
-                dto.setAdminAddr(rs.getString("admin_addr"));
-                dto.setAdminBirth(rs.getString("admin_birth"));
-                dto.setAdminGrade(rs.getString("admin_grade"));
-                dto.setAdminTeam(rs.getString("admin_team"));
+            if (rs.next()) {
+                dto = createAdminDTO(rs);
             }
+
         } catch (Exception e) {
             System.out.println("getAdmin() 에러 : " + e);
-        }finally {
-            disconnect(rs, pstmt, conn);
         }
+
         return dto;
     }
 }

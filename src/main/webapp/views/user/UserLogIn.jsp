@@ -13,9 +13,8 @@
 </head>
 <body>
 
-<h2>로그인 테스트 입니다</h2>
-
-<div class="login-container">
+<div class="login-container" align="center">
+    <h2>로그인 테스트 입니다</h2>
     <form action="user_login_action.go" method="post">
         <table class="login-tbl">
             <tr>
