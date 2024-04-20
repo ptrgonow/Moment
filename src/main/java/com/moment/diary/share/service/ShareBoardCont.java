@@ -18,7 +18,7 @@ public class ShareBoardCont implements Action {
         int boardNo = Integer.parseInt(request.getParameter("boardNo").trim());
         System.out.println("게시판 번호" + boardNo);
         ShareDAO dao = ShareDAO.getInstance();
-        ShareDTO dto = dao.shareContent(boardNo);
+        ShareDTO dto = dao.getShareContent(boardNo);
 
         Gson gson = new Gson();
         String json = gson.toJson(dto);

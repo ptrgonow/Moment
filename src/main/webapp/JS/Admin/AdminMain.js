@@ -166,10 +166,12 @@ $(document).ready(function () {
 
     const formTemplate = `
         <div class="notice-sub-tbl" style="display: none;">
-            <form id="noticeForm">
-                <table class="notice-sub">
+            <form>
+                <table>
                     <thead>
-                        <tr><th class="sub-title" colspan="2">공지 작성</th></tr>
+                        <tr>
+                        <th colspan="2">공지 작성</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr>
@@ -184,10 +186,10 @@ $(document).ready(function () {
                             <th>내용</th>
                             <td><textarea name="insertCont" class="insertCont"></textarea></td>
                         </tr>
-                        <tr id="no-btn">
+                        <tr>
                             <td colspan="2">
-                                <input class="notice-btn submit-btn" type="submit" value="등록">
-                                <input class="notice-btn reset-btn" type="reset" value="취소">
+                                <input class="submit-btn" type="submit" value="등록">
+                                <input class="reset-btn" type="reset" value="취소">
                             </td>
                         </tr>
                     </tbody>
@@ -196,23 +198,23 @@ $(document).ready(function () {
         </div>
     `;
     function clearNoticeForm() {
-        $('#noticeForm').find('.insertTitle').val('');
-        $('#noticeForm').find('.insertWriter').val('');
-        $('#noticeForm').find('.insertCont').val('');
-        $('#noticeForm').find('.submit-btn').val('등록');
-        $('#noticeForm').data('noticeNo', null); // 폼 관련 데이터도 초기화
+        $('.notice-sub').find('.insertTitle').val('');
+        $('.notice-sub').find('.insertWriter').val('');
+        $('.notice-sub').find('.insertCont').val('');
+        $('.notice-sub').find('.submit-btn').val('등록');
+        $('.notice-sub').data('noticeNo', null); // 폼 관련 데이터도 초기화
     }
 
     $('.notice-tbl').after(formTemplate);
 
     $(document).on('click', '.createNotice', function (e) {
         e.preventDefault();
-        $('#noticeForm').find('.sub-title').text('공지 작성');
-        $('#noticeForm').find('.insertTitle').val('');
-        $('#noticeForm').find('.insertWriter').val('');
-        $('#noticeForm').find('.insertCont').val('');
-        $('#noticeForm').find('.submit-btn').val('등록');
-        $('#noticeForm').data('noticeNo', null);
+        $('.notice-sub').find('.sub-title').text('공지 작성');
+        $('.notice-sub').find('.insertTitle').val('');
+        $('.notice-sub').find('.insertWriter').val('');
+        $('.notice-sub').find('.insertCont').val('');
+        $('.notice-sub').find('.submit-btn').val('등록');
+        $('.notice-sub').data('noticeNo', null);
         $('.notice-tbl').hide();
         $('.notice-sub-tbl').show();
     });
@@ -220,12 +222,12 @@ $(document).ready(function () {
     $(document).on('click', '.noticeUpdate', function () {
         const row = $(this).closest('tr');
         clearNoticeForm(); // 폼 초기화
-        $('#noticeForm').find('.sub-title').text('공지 수정');
-        $('#noticeForm').find('.insertTitle').val(row.find('td:nth-child(2)').text());
-        $('#noticeForm').find('.insertWriter').val(row.find('td:nth-child(3)').text());
-        $('#noticeForm').find('.insertCont').val(row.find('td:nth-child(4)').text());
-        $('#noticeForm').find('.submit-btn').val('수정');
-        $('#noticeForm').data('noticeNo', row.find('td:first').text());
+        $('.notice-sub').find('.sub-title').text('공지 수정');
+        $('.notice-sub').find('.insertTitle').val(row.find('td:nth-child(2)').text());
+        $('.notice-sub').find('.insertWriter').val(row.find('td:nth-child(3)').text());
+        $('.notice-sub').find('.insertCont').val(row.find('td:nth-child(4)').text());
+        $('.notice-sub').find('.submit-btn').val('수정');
+        $('.notice-sub').data('noticeNo', row.find('td:first').text());
         $('.notice-tbl').hide();
         $('.notice-sub-tbl').show();
     });
@@ -257,14 +259,14 @@ $(document).ready(function () {
     $(document).on('click', '.reset-btn', function (e) {
         e.preventDefault();
         clearNoticeForm();
-        $('.notice-sub-tbl').hide(); // 폼의 부모 컨테이너를 숨김
+        $('.notice-sub-tbl').hide();    // 폼의 부모 컨테이너를 숨김
+        $('.notice-tbl').show();        // 공지 목록을 보여줌
     });
 
     $(document).on('click', '.createNotice', function (e) {
         e.preventDefault();
         clearNoticeForm(); // 폼 초기화 및 새 공지 작성으로 설정
         $('.notice-sub-tbl').show(); // 폼 보이기
-        console.log('폼 제출 완료');
     });
 
     $(document).on('click', '.noticeDelete', function () {
@@ -439,11 +441,6 @@ $(document).ready(function() {
             });
         });
     }
-
-
-
-
-
 
 
 });

@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AdminCont implements Action {
+
     @Override
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        // 요청 : 뷰 페이지에서 전달받은 adminNo(번호)를 기준으로 해당 관리자 정보를 조회하는 비즈니스 로직
+        // 응답 : 조회된 관리자 정보를 JSON 형태로 응답
 
         int adminNo = Integer.parseInt(request.getParameter("adminNo"));
         System.out.println("adminNo : " + adminNo);
@@ -29,4 +32,6 @@ public class AdminCont implements Action {
 
         return null;
     }
+
 }
+

@@ -231,7 +231,7 @@ aside .sidebar a span.msg_count {
     font-size: 11px;
 }
 
-/*========================== main section ==========================*/
+/*========================== Main section ==========================*/
 
 main {
     margin-top: 1.4rem;
@@ -303,72 +303,45 @@ main .insights p {
         table section
 
 */
+
 main .notice-tbl {
-    display: none;
-    margin-top: 2rem;
+
 }
 
 main .notice-tbl h1 {
-    color: var(--clr-dark);
+
 }
 
 main .notice-tbl table {
-    background-color: var(--clr-white);
-    width: 85%;
-    margin: 3rem auto;
-    border-radius: var(--card-border-radius);
-    padding: var(--card-padding);
-    text-align: center;
-    box-shadow: var(--box-shadow);
-    transition: all .3s ease;
-    color: var(--clr-dark);
+
 }
 
 main .notice-tbl table:hover {
-    box-shadow: none;
+
 }
 
 main .notice-tbl tbody span.createNotice {
-    display: flex;
-    color: var(--clr-info-dark);
-    gap: 1rem;
-    margin-right: 3rem;
-    align-items: center;
-    height: 3.2rem;
-    transition: all .1s ease-in;
-    justify-content: flex-end;
-    cursor: pointer;
+
 }
 
 main .notice-tbl tbody span {
-    font-size: 1.6rem;
-    transition: all .1s ease-in;
+
 }
 
 main table tbody tr {
-    height: 3.8rem;
+
 }
 
 main table tbody td {
-    height: 3.8rem;
+
 }
 
 main .notice-sub-tbl {
-    display: none;
-    position: relative;
-    background-color: var(--clr-white);
-    width: 65%;
-    height: auto;
-    margin: 3rem auto;
-    border-radius: var(--card-border-radius);
-    padding: var(--card-padding);
-    box-shadow: var(--box-shadow);
-    transition: all .3s ease;
-    color: var(--clr-dark);
+
 }
 
 main .notice-sub-tbl:hover {
-    box-shadow: none;
+
 }
 
 
@@ -387,15 +360,6 @@ main .notice-sub-tbl .insertWriter {
 
 main .notice-sub-tbl textarea {
 
-    color: var(--clr-dark);
-    width: 85%;
-    font-size: 1rem;
-    margin: 2rem 0 2rem 2rem;
-    border-radius: var(--border-radius-1);
-    text-align: justify;
-    resize: none;
-    background-color: var(--clr-color-background);
-    height: 100%;
 }
 
 main .notice-sub-tbl textarea:focus {

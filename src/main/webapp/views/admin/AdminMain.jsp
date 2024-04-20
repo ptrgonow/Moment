@@ -121,7 +121,7 @@
     <%-- aside section end --%>
 
 
-    <%-- main section start (Ajax)--%>
+    <%-- Main section start (Ajax)--%>
     <main>
 
         <h1>Moment</h1>
@@ -184,7 +184,7 @@
 
 
     </main>
-    <%-- main section end --%>
+    <%-- Main section end --%>
 
 
     <%-- right section start --%>

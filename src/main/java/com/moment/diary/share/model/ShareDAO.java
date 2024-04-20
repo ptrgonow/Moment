@@ -1,12 +1,10 @@
 package com.moment.diary.share.model;
 
-import com.moment.admin.model.AdminSQL;
 import com.moment.configuration.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,59 +41,67 @@ public class ShareDAO {
     }
 
     // 공유 게시판 리스트를 보여주는 메서드
-    public List<ShareDTO> getShareList() throws SQLException {
+    public List<ShareDTO> getShareList() {
         List<ShareDTO> list = new ArrayList<>();
         ShareDTO dto = null;
         connect();
 
-        pstmt = conn.prepareStatement(ShareSQL.SELECTION_SHARE_LIST.getQuery());
-        rs = pstmt.executeQuery();
+        try {
+            pstmt = conn.prepareStatement(ShareSQL.SELECTION_SHARE_LIST.getQuery());
+            rs = pstmt.executeQuery();
 
-        while (rs.next()) {
+            while (rs.next()) {
 
-            dto = new ShareDTO();
+                dto = new ShareDTO();
 
-            dto.setBoardNo(rs.getInt("board_no"));
-            dto.setBoardTitle(rs.getString("board_title"));
-            dto.setBoardWriter(rs.getString("board_writer"));
-            dto.setBoardCont(rs.getString("board_cont"));
-            dto.setBoardDate(rs.getString("board_date"));
-            dto.setBoardUpdate(rs.getString("board_update"));
-            dto.setBoardHit(rs.getInt("board_hit"));
-            dto.setBoardLike(rs.getInt("board_like"));
+                dto.setBoardNo(rs.getInt("board_no"));
+                dto.setBoardTitle(rs.getString("board_title"));
+                dto.setBoardWriter(rs.getString("board_writer"));
+                dto.setBoardCont(rs.getString("board_cont"));
+                dto.setBoardDate(rs.getString("board_date"));
+                dto.setBoardUpdate(rs.getString("board_update"));
+                dto.setBoardHit(rs.getInt("board_hit"));
+                dto.setBoardLike(rs.getInt("board_like"));
 
-            list.add(dto);
+                list.add(dto);
+            }
+        } catch (Exception e) {
+            System.out.println("getShareList() 에러 : " + e);
+        } finally {
+            disconnect(rs, pstmt, conn);
         }
-
-        disconnect(rs, pstmt, conn);
         return list;
-    }   // getShareList 메서드 end
+    }
 
     // 상세정보를 보여주는 메서드
-    public ShareDTO shareContent(int boardNo) throws SQLException {
+    public ShareDTO getShareContent(int boardNo) {
 
         ShareDTO dto = null;
         connect();
-        pstmt = conn.prepareStatement(ShareSQL.CONTENT_SHARE.getQuery());
-        pstmt.setInt(1, boardNo);
-        rs = pstmt.executeQuery();
 
-        if (rs.next()) {
+        try {
+            pstmt = conn.prepareStatement(ShareSQL.CONTENT_SHARE.getQuery());
+            pstmt.setInt(1, boardNo);
+            rs = pstmt.executeQuery();
 
-            dto = new ShareDTO();
+            if (rs.next()) {
 
-            dto.setBoardNo(rs.getInt("board_no"));
-            dto.setBoardTitle(rs.getString("board_title"));
-            dto.setBoardWriter(rs.getString("board_writer"));
-            dto.setBoardCont(rs.getString("board_cont"));
-            dto.setBoardDate(rs.getString("board_date"));
-            dto.setBoardUpdate(rs.getString("board_update"));
-            dto.setBoardHit(rs.getInt("board_hit"));
-            dto.setBoardLike(rs.getInt("board_like"));
+                dto = new ShareDTO();
 
-
+                dto.setBoardNo(rs.getInt("board_no"));
+                dto.setBoardTitle(rs.getString("board_title"));
+                dto.setBoardWriter(rs.getString("board_writer"));
+                dto.setBoardCont(rs.getString("board_cont"));
+                dto.setBoardDate(rs.getString("board_date"));
+                dto.setBoardUpdate(rs.getString("board_update"));
+                dto.setBoardHit(rs.getInt("board_hit"));
+                dto.setBoardLike(rs.getInt("board_like"));
+            }
+        } catch (Exception e) {
+            System.out.println("getShareContent() 에러 : " + e);
+        } finally {
+            disconnect(rs, pstmt, conn);
         }
-        disconnect(rs, pstmt, conn);
         return dto;
     }
 
