@@ -11,13 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="<c:url value="/CSS/Admin/AdminMain.css"/>">
 
-    <!-- 부트스트랩 -->
-    <%--
-
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-     --%>
     <!-- 구글 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,7 +74,7 @@
             </a>
             <p>${sessionScope.adminName}</p>
             <a href="#" class="profile">
-                <img src="/image/proooooooo.jpeg" alt="">
+<%--                <img src="/image/proooooooo.jpeg" alt="">--%>
             </a>
         </nav>
 
@@ -184,6 +177,7 @@
             <div id="insight-tbl-notice" class="bottom-data"></div>
             <div id="insight-tbl-share" class="bottom-data"></div>
             <div id="insight-tbl-member" class="bottom-data"></div>
+            <div id="insight-tbl-add" class="bottom-data"></div>
 
 
             <div class="">

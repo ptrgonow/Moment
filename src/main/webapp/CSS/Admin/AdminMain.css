@@ -350,7 +350,7 @@ body{
     cursor: pointer;
 }
 
-.content main .header .left .breadcrumb li a.active{
+.content main .header .left .breadcrumb li.active{
     color: var(--primary);
     pointer-events: none;
 }
