@@ -3,7 +3,7 @@
 
 :root {
     --light: #f6f6f9;
-    --primary: #1976D2;
+    --primary: #ADC6E1;
     --light-primary: #CFE8FF;
     --grey: #eee;
     --dark-grey: #AAAAAA;
@@ -210,7 +210,7 @@ body{
     color: var(--dark);
 }
 
-.content nav .bi .bi-list{
+.content nav .bi.bi-list{
     cursor: pointer;
     color: var(--dark);
 }
@@ -355,27 +355,28 @@ body{
     pointer-events: none;
 }
 
-.content main .header .report{
-    height: 36px;
-    padding: 0 16px;
-    border-radius: 36px;
-    background: var(--primary);
-    color: var(--light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-gap: 10px;
-    font-weight: 500;
+.breadcrumb li:nth-child(1):hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: var(--primary)!important;
 }
 
-.content main .insights{
+.breadcrumb li:nth-child(2):hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: var(--primary)!important;
+}
+
+/* 다이어리 인사이트 */
+
+.content main .insights-diary{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     grid-gap: 24px;
     margin-top: 36px;
 }
 
-.content main .insights li{
+.content main .insights-diary li {
     padding: 24px;
     background: var(--light);
     border-radius: 20px;
@@ -385,200 +386,93 @@ body{
     cursor: pointer;
 }
 
-.content main .insights li .bi{
-    width: 80px;
-    height: 80px;
-    border-radius: 10px;
-    font-size: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.content main .insights li:nth-child(1) .bi{
-    background: var(--light-primary);
-    color: var(--primary);
-}
-
-.content main .insights li:nth-child(2) .bi{
-    background: var(--light-warning);
-    color: var(--warning);
-}
-
-.content main .insights li:nth-child(3) .bi{
-    background: var(--light-success);
-    color: var(--success);
-}
-
-.content main .insights li:nth-child(4) .bi{
-    background: var(--light-danger);
-    color: var(--danger);
-}
-
-.content main .insights li .info h3{
+.content main .insights-diary li .info h3 {
     font-size: 24px;
     font-weight: 600;
     color: var(--dark);
 }
 
-.content main .insights li .info p{
+.content main .insights-diary li .info p {
     color: var(--dark);
 }
 
-.content main .bottom-data{
+
+/* 상점 인사이트 */
+
+.content main .insights-product{
+    display: none;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-gap: 24px;
+    margin-top: 36px;
+}
+
+.content main .insights-product li {
+    padding: 24px;
+    background: var(--light);
+    border-radius: 20px;
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    grid-gap: 24px;
+    cursor: pointer;
+}
+
+.content main .insights-product li .info h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.content main .insights-product li .info p {
+    color: var(--dark);
+}
+
+
+/* 하단 게시판 영역 */
+
+.content main .bottom-data {
+    display: flex;
+    justify-content: center;
     grid-gap: 24px;
     margin-top: 24px;
-    width: 100%;
     color: var(--dark);
 }
 
-.content main .bottom-data>div{
+.content main .bottom-data>div {
+    width: 70vw;
+    text-align: center;
     border-radius: 20px;
     background: var(--light);
     padding: 24px;
     overflow-x: auto;
 }
 
-.content main .bottom-data .header{
-    display: flex;
-    align-items: center;
-    grid-gap: 16px;
-    margin-bottom: 24px;
-}
-
-.content main .bottom-data .header h3{
-    margin-right: auto;
-    font-size: 24px;
-    font-weight: 600;
-}
-
-.content main .bottom-data .header .bi{
-    cursor: pointer;
-}
-
-.content main .bottom-data .orders{
-    flex-grow: 1;
-    flex-basis: 500px;
-}
-
-.content main .bottom-data .orders table{
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.content main .bottom-data .orders table th{
-    padding-bottom: 12px;
-    font-size: 13px;
-    text-align: left;
-    border-bottom: 1px solid var(--grey);
-}
-
-.content main .bottom-data .orders table td{
-    padding: 16px 0;
-}
-
-.content main .bottom-data .orders table tr td:first-child{
-    display: flex;
-    align-items: center;
-    grid-gap: 12px;
-    padding-left: 6px;
-}
-
-.content main .bottom-data .orders table td img{
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.content main .bottom-data .orders table tbody tr{
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.content main .bottom-data .orders table tbody tr:hover{
-    background: var(--grey);
-}
-
-.content main .bottom-data .orders table tr td .status{
-    font-size: 10px;
-    padding: 6px 16px;
-    color: var(--light);
-    border-radius: 20px;
-    font-weight: 700;
-}
-
-.content main .bottom-data .orders table tr td .status.completed{
-    background: var(--success);
-}
-
-.content main .bottom-data .orders table tr td .status.process{
-    background: var(--primary);
-}
-
-.content main .bottom-data .orders table tr td .status.pending{
-    background: var(--warning);
-}
-
-.content main .bottom-data .reminders{
-    flex-grow: 1;
-    flex-basis: 300px;
-}
-
-.content main .bottom-data .reminders .task-list{
-    width: 100%;
-}
-
-.content main .bottom-data .reminders .task-list li{
-    width: 100%;
-    margin-bottom: 16px;
-    background: var(--grey);
-    padding: 14px 10px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.content main .bottom-data .reminders .task-list li .task-title{
-    display: flex;
-    align-items: center;
-}
-
-.content main .bottom-data .reminders .task-list li .task-title p{
-    margin-left: 6px;
-}
-
-.content main .bottom-data .reminders .task-list li .bi{
-    cursor: pointer;
-}
-
-.content main .bottom-data .reminders .task-list li.completed{
-    border-left: 10px solid var(--success);
-}
-
-.content main .bottom-data .reminders .task-list li.not-completed{
-    border-left: 10px solid var(--danger);
-}
-
-.content main .bottom-data .reminders .task-list li:last-child{
-    margin-bottom: 0;
-}
 
 /*
 ============================== 테이블 ==============================
 */
 
+/* 공지 목록 */
+
 .notice-list {
     display: none;
-    width: 100%;
+    width: 50vw;
+    min-height: auto;
+}
+
+.notice-list h2 {
+    margin-bottom: 1rem;
 }
 
 .notice-list li {
     display: flex;
     justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+}
+
+.notice-list li:hover {
+    border-radius: 10px;
+    background-color: var(--grey);
 }
 
 .notice-list li p {
@@ -615,85 +509,400 @@ body{
     min-width: 100px;
 }
 
-.notice-list .createNotice {
+.notice-list li div button.noticeUpdate {
+    color: var(--primary);
+    margin-right: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: var(--clr-white);
+}
+.notice-list li div button.noticeDelete {
+    color: var(--danger);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: var(--clr-white);
+}
 
+.notice-list li div button.noticeUpdate:hover,
+.notice-list li div button.noticeDelete:hover {
+    text-decoration: underline;
+}
+
+.create-btn {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.createNotice {
+    display: flex;
+    text-align: right;
+    margin-top: -2.5rem;
+    min-width: fit-content;
+    justify-content: flex-end;
+}
+
+.page-btn {
+    text-align: center;
+    margin-top: 2rem;
+    min-width: fit-content;
+}
+
+.page-btn #pageNumbers button {
+    font-size: 1rem;
+    background: none;
+    border: none;
+    color: var(--primary);
+    text-decoration: none;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.page-btn #pageNumbers button.first{
+    margin-right: 20px;
+}
+
+.page-btn #pageNumbers button.last {
+    margin-left: 20px;
+}
+
+.page-btn #pageNumbers button.pageNumber.current {
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--success);
+}
+
+
+/* 등록 폼 페이지 */
+
+.notice-sub-list {
+    display: none;
+    height: auto;
+}
+
+.notice-sub-list h2 {
+    margin-bottom: 1rem;
+}
+
+.notice-sub-list ul.notice-sub {
+    display: inline-block;
+    width: 60%;
+    min-width: fit-content;
+    list-style-type: none;
+}
+
+.notice-sub-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.notice-sub-list li:last-child {
+    border-bottom: none;
+}
+
+.notice-sub-list li div {
+    flex: 1;
+}
+
+.notice-sub-list li p {
+    text-align: center;
+    min-width: 50px;
+    max-width: 55px;
+}
+
+.notice-sub-list li input[type="text"]{
+    flex: 2;
+    height: 2rem;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: var(--grey);
+
+}
+.notice-sub-list li textarea {
+    flex: 2;
+    min-height: 200px;
+    margin-left: 10px;
+    border: none;
+    resize: none;
+    outline: none;
+    border-radius: 5px;
+    background-color: var(--grey);
+}
+
+.sub-btn {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-top: 1rem;
+}
+
+.sub-btn .submit-btn {
+    margin-right: 1rem;
+}
+
+.sub-btn input[type="submit"],
+.sub-btn input[type="reset"] {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary);
+    color: var(--light);
+    cursor: pointer;
+}
+
+.sub-btn input:hover {
+    transition: 0.3s;
+    background-color: var(--danger);
 }
 
 
+/* 관리자 리스트 */
 
 
+.admin-list {
+    display: none;
+    width: 50vw;
+    min-height: auto;
+}
+
+.admin-list h2 {
+    margin-bottom: 1rem;
+}
+
+.admin-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.admin-list li:hover {
+    border-radius: 10px;
+    background-color: var(--grey);
+}
 
 
+.admin-list li p {
+    flex-basis: 20%;
+    margin-right: auto;
+}
+
+.admin-list li .adminNo {
+    min-width: fit-content;
+}
+
+.admin-list li .adminId {
+    text-align: center;
+    min-width: fit-content;
+}
+
+.admin-list li .adminName,
+.admin-list li .adminGrade,
+.admin-list li .adminTeam {
+    min-width: fit-content;
+}
 
 
+/* 관리자 상세정보 리스트 */
 
 
+.admin-cont-list {
+    display: none;
+    width: 50vw;
+    min-height: auto;
+}
 
+.admin-cont-list h2 {
+    margin-bottom: 1rem;
+}
 
-/*
-============================== 반응형 ==============================
-*/
-
-@media screen and (max-width: 768px) {
-    .sidebar{
-        width: 200px;
-    }
-
-    .content{
-        width: calc(100% - 60px);
-        left: 200px;
-    }
+.admin-cont-list ul {
+    display: inline-block;
+    width: 60%;
+    min-width: fit-content;
+    list-style-type: none;
 
 }
 
-@media screen and (max-width: 576px) {
+.admin-cont-list li {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    align-items: center;
+}
 
-    .content nav form .form-input input{
-        display: none;
+.admin-cont-list li p {
+    font-size: 1rem;
+    font-weight: bold;
+    flex-basis: 10%;
+    text-align: center;
+}
+
+
+/* 공유 게시판 목록 */
+
+
+.share-list {
+    display: none;
+    width: 50vw;
+    min-height: auto;
+}
+
+.share-list h2 {
+    margin-bottom: 1rem;
+}
+
+.share-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.share-list li:hover {
+    border-radius: 10px;
+    background-color: var(--grey);
+}
+
+.share-list li p {
+    flex-basis: 20%;
+}
+
+.share-list li .boardNo {
+    max-width: 30px;
+}
+
+.share-list li .boardTitle {
+    text-align: center;
+    min-width: 150px;
+}
+
+.share-list li .boardWriter,
+.share-list li .boardDate {
+    min-width: 100px;
+}
+
+
+/* 공유 게시판 상세정보 리스트 */
+
+
+.share-cont-list {
+    display: none;
+    width: 50vw;
+    min-height: auto;
+}
+
+.share-cont-list h2 {
+    margin-bottom: 1rem;
+}
+
+.share-cont-list ul {
+    display: inline-block;
+    width: 60%;
+    min-width: fit-content;
+    list-style-type: none;
+
+.share-cont-list li {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.share-cont-list li p {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: bold;
+    flex-basis: 10%;
+    text-align: center;
+}
+
+.share-cont-list li p.boardTitle,
+.share-cont-list li p.boardWriter,
+.share-cont-list li p.boardDate {
+    order: 1;
+    min-width: 100px;
+
+}
+
+.share-cont-list li p.boardCont {
+    order: 2;
+    margin: auto;
+    flex-basis: 50%;
+}
+
+
+    /*
+    ============================== 반응형 ==============================
+    */
+
+    @media screen and (max-width: 768px) {
+        .sidebar {
+            width: 200px;
+        }
+
+        .content {
+            width: calc(100% - 60px);
+            left: 200px;
+        }
+
     }
 
-    .content nav form .form-input button{
-        width: auto;
-        height: auto;
-        background: transparent;
-        color: var(--dark);
-        border-radius: none;
-    }
+    @media screen and (max-width: 576px) {
 
-    .content nav form.show .form-input input{
-        display: block;
-        width: 100%;
-    }
+        .content nav form .form-input input {
+            display: none;
+        }
 
-    .content nav form.show .form-input button{
-        width: 36px;
-        height: 100%;
-        color: var(--light);
-        background: var(--danger);
-        border-radius: 0 36px 36px 0;
-    }
+        .content nav form .form-input button {
+            width: auto;
+            height: auto;
+            background: transparent;
+            color: var(--dark);
+            border-radius: 0;
+        }
 
-    .content nav form.show~.notif, .content nav form.show~.profile{
-        display: none;
-    }
+        .content nav form.show .form-input input {
+            display: block;
+            width: 100%;
+        }
 
-    .content main .insights {
-        grid-template-columns: 1fr;
-    }
+        .content nav form.show .form-input button {
+            width: 36px;
+            height: 100%;
+            color: var(--light);
+            background: var(--danger);
+            border-radius: 0 36px 36px 0;
+        }
 
-    .content main .bottom-data .header{
-        min-width: 340px;
-    }
+        .content nav form.show ~ .notif, .content nav form.show ~ .profile {
+            display: none;
+        }
 
-    .content main .bottom-data .orders table{
-        min-width: 340px;
-    }
+        .content main .insights-product {
+            grid-template-columns: 1fr;
+        }
 
-    .content main .bottom-data .reminders .task-list{
-        min-width: 340px;
-    }
+        .content main .bottom-data .header {
+            min-width: 340px;
+        }
 
+        .content main .bottom-data .orders table {
+            min-width: 340px;
+        }
+
+        .content main .bottom-data .reminders .task-list {
+            min-width: 340px;
+        }
+
+    }
 }

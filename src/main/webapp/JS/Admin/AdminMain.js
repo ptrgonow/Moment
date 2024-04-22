@@ -1,6 +1,5 @@
 let currentEditingId = null; // 현재 편집 중인 공지 ID를 저장
 let isFormAdded = false; // 폼이 추가되었는지 확인하는 변수를 초기화합니다.
-// 페이지가 로드될 때 사이드바의 상태를 설정합니다.
 
 // =========================== 화면 설정 ======================================
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -62,10 +61,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
+// 중앙 인사이트 토글러 (다이어리 / 상점 active 추가)
+document.addEventListener('DOMContentLoaded', (event) => {
+    const diaryLink = document.querySelector('.breadcrumb li:nth-child(1)');
+    const shopLink = document.querySelector('.breadcrumb li:nth-child(2)');
+    const diaryInsights = document.querySelector('.insights-diary');
+    const shopInsights = document.querySelector('.insights-product');
+
+    diaryLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        diaryLink.classList.add('active');
+        shopLink.classList.remove('active');
+        diaryInsights.style.display = 'grid';
+        shopInsights.style.display = 'none';
+    });
+
+    shopLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        shopLink.classList.add('active');
+        diaryLink.classList.remove('active');
+        shopInsights.style.display = 'grid';
+        diaryInsights.style.display = 'none';
+    });
+});
+
+
+
 function hideAll() {
-    $('.notice-list, .notice-sub-tbl, .admin-tbl, .admin-cont-tbl,' +
-        '.share-tbl, .share-cont-tbl').hide();
+    $('.notice-list, .notice-sub-list,' +
+        '.admin-list, .admin-cont-list,' +
+        '.share-list, .share-cont-list').hide();
 }
+
 $('ul.side-menu a').click(function() {
     const text = $(this).text();
     hideAll();
@@ -74,10 +101,10 @@ $('ul.side-menu a').click(function() {
             $('.notice-list').show();
             break;
         case '다이어리':
-            $('.share-tbl').show();
+            $('.share-list').show();
             break;
         case '관리자 목록':
-            $('.admin-tbl').show();
+            $('.admin-list').show();
             break;
         // 추가적으로 필요한 경우에는 여기에 더 많은 case 문을 추가할 수 있습니다.
     }
@@ -86,7 +113,12 @@ $('ul.side-menu a').click(function() {
 
 // =========================== 공지 ======================================
 
+
 $(document).ready(function () {
+
+    let currentPage = 1;
+    const pageSize = 5;
+    let lastPage = 1;
 
     const noticeListTemplate = `
     <div class="notice-list">
@@ -103,33 +135,37 @@ $(document).ready(function () {
         $.ajax({
             url: 'admin_notice.go',
             type: 'GET',
+            data: { page: currentPage, size: pageSize },
             dataType: 'json',
             success: function (data) {
                 const ul = $('.notice-list ul');
                 ul.empty();
-                $.each(data, function (index, {noticeCont, noticeWriter, noticeDate, noticeNo, noticeTitle}) {
+                const {noticeList, currentPageSize} = data;
+                $.each(noticeList, function (index, {noticeCont, noticeWriter, noticeDate, noticeNo, noticeTitle}) {
                     ul.append(`
-                        <li>
-                            <p class="noticeNo">${noticeNo}</p>
-                            <p class="noticeTitle">${noticeTitle}</p>
-                            <p class="noticeWriter">${noticeWriter}</p>
-                            <p class="noticeCont">${noticeCont}</p>
-                            <p class="noticeDate">${noticeDate}</p>
-                            <div>
-                                <button class="noticeUpdate main">수정</button>
-                                <button class="noticeDelete danger">삭제</button>
-                            </div>
-                        </li>
-                    `);
+            <li>
+                <p class="noticeNo">${noticeNo}</p>
+                <p class="noticeTitle">${noticeTitle}</p>
+                <p class="noticeWriter">${noticeWriter}</p>
+                <p class="noticeCont">${noticeCont}</p>
+                <p class="noticeDate">${noticeDate}</p>
+                <div>
+                    <button class="noticeUpdate">수정</button>
+                    <button class="noticeDelete">삭제</button>
+                </div>
+            </li>
+        `);
                 });
                 ul.append(`
-                        <div class="createNotice">
-                             <li>
-                                <span><i class="bi bi-pencil-square"></i><p>공지 작성</p></span>
-                            </li>
-                        </div>
-                       
-                    `);
+                <div class="page-btn">
+                    <span id="pageNumbers"></span>
+                </div>
+                <div class="createNotice">
+                    <span><i class="bi bi-pencil-square create-btn"></i><p class="create-btn">공지 작성</p></span>
+                </div>
+        `);
+                ({lastPage} = data);  // 서버에서 반환한 마지막 페이지 번호를 저장
+                updatePageNumbers(currentPageSize);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log('Error loading notice list: ' + textStatus + ' ' + errorThrown);
@@ -137,72 +173,107 @@ $(document).ready(function () {
         });
     }
 
+    function updatePageNumbers(currentPageSize) {
+        const pageNumbers = $('#pageNumbers');
+        pageNumbers.empty();
+
+        // '처음' 버튼 추가
+        pageNumbers.append(`<button class="pageNumber first" data-page="1">처음</button>`);
+        // '<' 버튼 추가
+        if (currentPage > 1) {
+            pageNumbers.append(`<button class="pageNumber" data-page="${currentPage - 1}"><</button>`);
+        }
+
+        // 페이지 번호 버튼 추가
+        let startPage = currentPage - 1;
+        let endPage = currentPage + 1;
+
+        for (let i = startPage; i <= endPage; i++) {
+            if (i > 0 && !(i === currentPage + 1 && currentPageSize < 5)) {
+                if (i === currentPage) {
+                    pageNumbers.append(`<button class="pageNumber current" data-page="${i}">${i}</button>`);
+                } else {
+                    pageNumbers.append(`<button class="pageNumber other" data-page="${i}">${i}</button>`);
+                }
+            }
+        }
+
+        // '>' 버튼 추가
+        if (currentPageSize >= 5) {
+            pageNumbers.append(`<button class="pageNumber" data-page="${currentPage + 1}">></button>`);
+        }
+
+        // '마지막' 버튼 추가
+        pageNumbers.append(`<button class="pageNumber last" data-page="last">마지막</button>`);
+    }
+
+    $(document).on('click', '.pageNumber', function() {
+        const page = $(this).data('page');
+
+        if (page === 'last') {
+            currentPage = lastPage;
+        } else {
+            currentPage = parseInt(page);
+        }
+        getNoticeList();
+    });
+
     const formTemplate = `
-        <div class="notice-sub-tbl" style="display: none;">
-            <form>
-                <table>
-                    <thead>
-                        <tr>
-                        <th colspan="2">공지 작성</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>제목</th>
-                            <td><input type="text" name="insertTitle" class="insertTitle"></td>
-                        </tr>
-                        <tr>
-                            <th>작성자</th>
-                            <td><input type="text" name="insertWriter" class="insertWriter"></td>
-                        </tr>
-                        <tr>
-                            <th>내용</th>
-                            <td><textarea name="insertCont" class="insertCont"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input class="submit-btn" type="submit" value="등록">
-                                <input class="reset-btn" type="reset" value="취소">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="notice-sub-list">
+            <form id="noticeForm">
+                <h2>공지 작성</h2>
+                <ul class="notice-sub">
+                    <li>
+                        <p>제목</p>
+                        <input type="text" name="insertTitle" class="insertTitle">
+                    </li>
+                    <li>
+                        <p>작성자</p>
+                        <input type="text" name="insertWriter" class="insertWriter">
+                    </li>
+                    <li>
+                        <p>내용</p>
+                        <textarea name="insertCont" class="insertCont"></textarea>
+                    </li>
+                    <li>
+                        <div class="sub-btn">
+                            <input class="submit-btn" type="submit" value="등록">
+                            <input class="reset-btn" type="reset" value="취소">
+                        </div>
+                    </li>
+                </ul>
             </form>
         </div>
     `;
+
     function clearNoticeForm() {
-        $('.notice-sub').find('.insertTitle').val('');
-        $('.notice-sub').find('.insertWriter').val('');
-        $('.notice-sub').find('.insertCont').val('');
-        $('.notice-sub').find('.submit-btn').val('등록');
-        $('.notice-sub').data('noticeNo', null); // 폼 관련 데이터도 초기화
+        $('.notice-sub-list').find('.insertTitle').val('');
+        $('.notice-sub-list').find('.insertWriter').val('');
+        $('.notice-sub-list').find('.insertCont').val('');
+        $('.notice-sub-list').find('.submit-btn').val('등록');
+        $('.notice-sub-list').data('noticeNo', null); // 폼 관련 데이터도 초기화
     }
 
     $('.notice-list').after(formTemplate);
 
-    $(document).on('click', '.createNotice', function (e) {
+    $(document).on('click', '.create-btn', function (e) {
         e.preventDefault();
-        $('.notice-sub').find('.sub-title').text('공지 작성');
-        $('.notice-sub').find('.insertTitle').val('');
-        $('.notice-sub').find('.insertWriter').val('');
-        $('.notice-sub').find('.insertCont').val('');
-        $('.notice-sub').find('.submit-btn').val('등록');
-        $('.notice-sub').data('noticeNo', null);
+        clearNoticeForm(); // 폼 초기화 및 새 공지 작성으로 설정
         $('.notice-list').hide();
-        $('.notice-sub-tbl').show();
+        $('.notice-sub-list').show();
     });
 
     $(document).on('click', '.noticeUpdate', function () {
-        const row = $(this).closest('tr');
+        const row = $(this).closest('li');
         clearNoticeForm(); // 폼 초기화
-        $('.notice-sub').find('.sub-title').text('공지 수정');
-        $('.notice-sub').find('.insertTitle').val(row.find('td:nth-child(2)').text());
-        $('.notice-sub').find('.insertWriter').val(row.find('td:nth-child(3)').text());
-        $('.notice-sub').find('.insertCont').val(row.find('td:nth-child(4)').text());
-        $('.notice-sub').find('.submit-btn').val('수정');
-        $('.notice-sub').data('noticeNo', row.find('td:first').text());
+        $('.notice-sub-list').find('.sub-title').text('공지 수정');
+        $('.notice-sub-list').find('.insertTitle').val(row.find('.noticeTitle').text());
+        $('.notice-sub-list').find('.insertWriter').val(row.find('.noticeWriter').text());
+        $('.notice-sub-list').find('.insertCont').val(row.find('.noticeCont').text());
+        $('.notice-sub-list').find('.submit-btn').val('수정');
+        $('.notice-sub-list').data('noticeNo', row.find('.noticeNo').text());
         $('.notice-list').hide();
-        $('.notice-sub-tbl').show();
+        $('.notice-sub-list').show();
     });
 
     $('#noticeForm').submit(function (e) {
@@ -210,7 +281,7 @@ $(document).ready(function () {
         const formData = $(this).serialize();
         const isUpdate = $(this).find('.submit-btn').val() === '수정';
         const url = isUpdate ? 'admin_notice_update.go' : 'admin_notice_write.go';
-        const noticeNo = isUpdate ? $(this).data('noticeNo') : undefined;
+        const noticeNo = isUpdate ? $(this).closest('.notice-sub-list').data('noticeNo') : undefined;
 
         $.ajax({
             url: url,
@@ -218,13 +289,16 @@ $(document).ready(function () {
             data: isUpdate ? formData + '&noticeNo=' + noticeNo : formData,
             success: function (data) {
                 alert('공지가 ' + (isUpdate ? '수정' : '등록') + ' 되었습니다.');
-                $('.notice-sub-tbl').hide(); // 폼 숨기기
+                $('.notice-sub-list').hide(); // 폼 숨기기
                 clearNoticeForm(); // 폼 초기화
                 getNoticeList(); // 공지 목록 업데이트
+                $('.notice-list').show();
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                console.log(noticeNo, isUpdate)
                 alert('공지 ' + (isUpdate ? '수정' : '등록') + '에 실패했습니다.');
                 console.log('Error: ' + textStatus + ' ' + errorThrown);
+                console.log('Server response:', jqXHR.responseText);
             }
         });
     });
@@ -232,18 +306,12 @@ $(document).ready(function () {
     $(document).on('click', '.reset-btn', function (e) {
         e.preventDefault();
         clearNoticeForm();
-        $('.notice-sub-tbl').hide();    // 폼의 부모 컨테이너를 숨김
+        $('.notice-sub-list').hide();    // 폼의 부모 컨테이너를 숨김
         $('.notice-list').show();        // 공지 목록을 보여줌
     });
 
-    $(document).on('click', '.createNotice', function (e) {
-        e.preventDefault();
-        clearNoticeForm(); // 폼 초기화 및 새 공지 작성으로 설정
-        $('.notice-sub-tbl').show(); // 폼 보이기
-    });
-
     $(document).on('click', '.noticeDelete', function () {
-        const noticeNo = $(this).closest('tr').children('td:first').text();
+        const noticeNo = $(this).closest('li').find('.noticeNo').text();
 
         $.ajax({
             url: 'admin_notice_delete.go',
@@ -267,69 +335,23 @@ $(document).ready(function () {
 
 $(document).ready(function() {
 
-    const memberTableTemplate = `
-        <div class="admin-tbl" style="display: none;">
-            <h1>관리자 목록</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>이름</th>
-                        <th>아이디</th>
-                        <th>등급</th>
-                        <th>팀</th>
-                    </tr>
-                </thead>
-                <tbody>
-                
-                </tbody>
-            </table>
-          
-        </div>
-    `;
+    const memberListTemplate = `
+    <div class="admin-list">
+        <h2>관리자</h2>
+        <ul>
+        </ul>
+    </div>
+`;
 
     const AdminContTemplate = `
-   
-        <div class="admin-cont-tbl" style="display: none;">
-            <table>
-                <tr>
-                    <th>이름</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>아이디</th>
-                    <td></td>
-                </tr>
-                    <tr>
-                    <th>연락처</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>주소</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>생년월일</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>현재팀</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>관리등급</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input class="close-btn" type="button" value="닫기">
-                    </td>
-                </tr>
-            </table>
-        </div>
-       `;
+    <div class="admin-cont-list">
+        <h2>상세 정보</h2>
+        <ul>
+        </ul>
+    </div>
+`;
 
-    $('#insight-tbl-member').html(memberTableTemplate);
+    $('#insight-tbl-member').html(memberListTemplate);
     getMemberList();
 
     function getMemberList() {
@@ -338,18 +360,18 @@ $(document).ready(function() {
             type: 'GET',
             dataType: 'json',
             success: function(data) {
-                const tbody = $('.admin-tbl table tbody');
-                tbody.empty();
+                const ul = $('.admin-list ul');
+                ul.empty();
                 $.each(data, function(index, {adminId, adminName, adminGrade, adminTeam, adminNo}) {
-                    tbody.append(`
-                    <tr>
-                        <td>${adminNo}</td>
-                        <td class="admin-cont">${adminName}</td>
-                        <td>${adminId}</td>
-                        <td>${adminGrade}</td>
-                        <td>${adminTeam}</td>
-                    </tr>
-                    `);
+                    ul.append(`
+                <li>
+                    <p class="adminNo">${adminNo}</p>
+                    <p class="adminName">${adminName}</p>
+                    <p class="adminId">${adminId}</p>
+                    <p class="adminGrade">${adminGrade}</p>
+                    <p class="adminTeam">${adminTeam}</p>
+                </li>
+                `);
                 });
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -357,13 +379,11 @@ $(document).ready(function() {
             }
         });
 
-        $('.admin-tbl').after(AdminContTemplate);
+        $('.admin-list').after(AdminContTemplate);
 
-        $('.admin-tbl table tbody').on('click', 'tr', function(e) {
+        $('.admin-list').on('click', 'li', function(e) {
             e.preventDefault();
-            // 클릭된 행의 관리자 번호를 가져옵니다.
-            const adminNo = $(this).find('td:first').text();
-            // 관리자 상세 정보를 가져옵니다.
+            const adminNo = $(this).find('.adminNo').text();
             getAdminCont(adminNo);
         });
 
@@ -377,13 +397,26 @@ $(document).ready(function() {
                     const values = [
                         adminName, adminId, adminPhone, adminAddr, adminBirth, adminTeam, adminGrade
                     ];
-                    // 서버로부터 받아온 관리자의 상세 정보를 HTML 템플릿에 채워 넣습니다.
-                    $('.admin-cont-tbl td').each(function(index) {
-                        $(this).text(values[index]);
-                        // 관리자 상세 정보 테이블을 보이게 합니다.
-                        $('.admin-tbl').hide();
-                        $('.admin-cont-tbl').show();
-                    });
+                    const ul = $('.admin-cont-list ul');
+                    ul.empty();
+                    ul.append(`
+                        <li>
+                            <p class="adminName">이름</p>${adminName}
+                            <p class="adminId">아이디</p>${adminId}
+                        </li>
+                        <li>
+                            <p class="adminTeam">부서</p>${adminTeam}
+                            <p class="adminGrade">직급</p>${adminGrade}
+                            
+                        </li>
+                        <li>
+                            <p class="adminBirth">생년월일</p>${adminBirth}
+                            <p class="adminPhone">연락처</p>${adminPhone}
+                            <p class="adminAddr">주소</p>${adminAddr}
+                        </li>
+                    `);
+                    $('.admin-list').hide();
+                    $('.admin-cont-list').show();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log('관리자 상세정보 호출 실패: ' + textStatus + ' ' + errorThrown);
@@ -392,12 +425,12 @@ $(document).ready(function() {
         }
 
         $(document).on('click', '.close-btn', function() {
-            $('.admin-tbl').show();
-            $('.admin-cont-tbl').hide();
+            $('.admin-list').show();
+            $('.admin-cont-list').hide();
         });
 
         $(document).on('click', '.memberDelete', function() {
-            const memberNo = $(this).closest('tr').children('td:first').text();
+            const memberNo = $(this).closest('li').find('.adminNo').text();
 
             $.ajax({
                 url: 'admin_member_delete.go',
@@ -423,60 +456,24 @@ $(document).ready(function() {
 $(document).ready(function() {
 
     // 공유 게시판 리스트 템플릿
-    const shareTableTemplate = `
-        <div class="share-tbl" style="display: none;">
-            <h1>게시글 목록</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>글 번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                    </tr>
-                </thead>
-                <tbody>
-                
-                </tbody>
-            </table>
-        </div>
-    `;
-    // 공유 게시판 상세정보 폼 템플릿
-    const shareContTemplate = `
-        <div class ="share-cont-tbl" style="display: none;">
-            <h1>게시글 상세 정보</h1>
-            <table>
-                <tr>
-                    <th>글 번호</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>제목</th>
-                    <td></td>
-                </tr>
-                    <tr>
-                    <th>작성자</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>내용</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>작성일</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input class="share-list-btn" type="button" value="목록">
-                        <input class="share-delete-btn" type="button" value="삭제">
-                    </td>
-                </tr>
-            </table>
-        </div>
-    `;
+    const shareListTemplate = `
+    <div class="share-list" >
+        <h1>게시글 목록</h1>
+        <ul>
+        </ul>
+    </div>
+`;
 
-    $('#insight-tbl-share').html(shareTableTemplate);
+// 공유 게시판 상세정보 폼 템플릿
+    const shareContTemplate = `
+    <div class="share-cont-list">
+        <h2>게시글 상세 정보</h2>
+        <ul>
+        </ul>
+    </div>
+`;
+
+    $('#insight-tbl-share').html(shareListTemplate);
     getShareList();
 
     function getShareList() {
@@ -485,19 +482,17 @@ $(document).ready(function() {
             type: 'GET',
             dateType: 'json',
             success: function (data) {
-                const tbody = $('.share-tbl table tbody');
-                tbody.empty();
+                const ul = $('.share-list ul');
+                ul.empty();
                 $.each(data, function (index, {boardNo, boardTitle, boardWriter, boardDate}) {
-
-                    tbody.append(`
-                    <tr>
-                        <td>${boardNo}</td>
-                        <td>${boardTitle}</td>
-                        <td>${boardWriter}</td>
-                        <td>${boardDate}</td>
-                        <td><input type="button" class="board-cont-btn" value="상세정보"></td>
-                    </tr>
-                    `);
+                    ul.append(`
+                <li>
+                    <p class="boardNo">${boardNo}</p>
+                    <p class="boardTitle">${boardTitle}</p>
+                    <p class="boardWriter">${boardWriter}</p>
+                    <p class="boardDate">${boardDate}</p>
+                </li>
+                `);
                 });
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -505,12 +500,10 @@ $(document).ready(function() {
             }
         });
 
-        $('.share-tbl').after(shareContTemplate);
+        $('.share-list').after(shareContTemplate);
 
-        $('.share-tbl').on('click', '.board-cont-btn', function() {
-            // 클릭된 행의 첫 번째 셀(번호)의 텍스트를 가져옵니다.
-            const boardNo = $(this).closest('tr').find('td:first').text();
-            // 가져온 번호를 매개변수로 getShareCont 함수를 호출합니다.
+        $('.share-list').on('click', 'li', function() {
+            const boardNo = $(this).closest('li').find('.boardNo').text();
             getShareCont(boardNo);
         });
 
@@ -521,15 +514,21 @@ $(document).ready(function() {
                 data: { boardNo: boardNo },
                 dataType: 'json',
                 success: function ({boardNo, boardTitle, boardWriter, boardCont, boardDate}) {
-                    console.log(boardNo, boardTitle, boardWriter, boardDate);
                     const values = [
                         boardNo, boardTitle, boardWriter, boardCont, boardDate];
-                    $('.share-cont-tbl td').each(function (index){
-                        $(this).text(values[index]);
-                        $('.share-tbl').hide();
-                        $('.share-cont-tbl').show();
-                    });
-
+                    const ul = $('.share-cont-list ul');
+                    ul.empty();
+                    ul.append(`
+                        <li>
+                            <p class="boardTitle">${boardTitle}</p>
+                            <p class="boardWriter">${boardWriter}</p>
+                            <p class="boardDate">${boardDate}</p>
+                            <p class="boardCont">${boardCont}</p>
+                        </li>
+                       
+                `);
+                    $('.share-list').hide();
+                    $('.share-cont-list').show();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log('상세 다이어리 호출 실패: ' + textStatus + ' ' + errorThrown);

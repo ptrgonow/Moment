@@ -92,60 +92,103 @@
                 <div class="left">
                     <h1>Moment</h1>
                     <ul class="breadcrumb">
-                        <li><a href="#">다이어리</a></li>
+                        <li>다이어리</li>
                         /
-                        <li><a href="#" class="active">상점</a></li>
+                        <li>상점</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Insights -->
-            <ul class="insights">
+            <!-- insights-product -->
+            <ul class="insights-diary">
                 <li>
                     <span class="info">
                         <h3>
-                            1,074
+                            \${totalDiary} 건
                         </h3>
-                        <p>Paid Order</p>
+                        <p>등록 게시글</p>
+                        <small>Last 24 Hour</small>
                     </span>
                 </li>
                 <li>
-                        <span class="info">
-                            <h3>
-                                3,944
-                            </h3>
-                            <p>Site Visit</p>
-                        </span>
+                    <span class="info">
+                        <h3>
+                            \${NewMember} 명
+                        </h3>
+                        <p>신규 가입자</p>
+                        <small>Last 24 Hour</small>
+                    </span>
                 </li>
                 <li>
-                        <span class="info">
-                            <h3>
-                                14,721
-                            </h3>
-                            <p>Searches</p>
-                        </span>
+                    <span class="info">
+                        <h3>
+                            \${totalShare} 건
+                        </h3>
+                        <p>공유 게시글</p>
+                        <small>Last 24 Hour</small>
+                    </span>
                 </li>
                 <li>
-                        <span class="info">
-                            <h3>
-                                $6,742
-                            </h3>
-                            <p>Total Sales</p>
-                        </span>
+                    <span class="info">
+                        <h3>
+                            \${totalWriter} 명
+                        </h3>
+                        <p>작성자</p>
+                        <small>Last 24 Hour</small>
+                    </span>
                 </li>
             </ul>
             <!-- End of Insights -->
 
-            <div class="bottom-data">
-                <div id="insight-tbl-notice"></div>
-                <div id="insight-tbl-member"></div>
-                <div id="insight-tbl-share"></div>
+            <!-- insights-product -->
+            <ul class="insights-product">
+                <li>
+                    <span class="info">
+                        <h3>
+                            \${totalProduct} 개
+                        </h3>
+                        <p>등록 상품</p>
+                        <small>Last 24 Hour</small>
+                    </span>
+                </li>
+                <li>
+                    <span class="info">
+                        <h3>
+                            \${totalGuest} 명
+                        </h3>
+                        <p>총 방문자</p>
+                        <small>Last 24 Hour</small>
+                    </span>
+                </li>
+                <li>
+                    <span class="info">
+                        <h3>
+                            \${totalOrder} 건
+                        </h3>
+                        <p>총 주문량</p>
+                        <small>Last 24 Hour</small>
+                    </span>
+                </li>
+                <li>
+                    <span class="info">
+                        <h3>
+                            \${totalSales} 원
+                        </h3>
+                        <p>총 판매액</p>
+                        <small>Last 24 Hour</small>
+                    </span>
+                </li>
+            </ul>
+            <!-- End of Insights -->
+
+            <div id="insight-tbl-notice" class="bottom-data"></div>
+            <div id="insight-tbl-share" class="bottom-data"></div>
+            <div id="insight-tbl-member" class="bottom-data"></div>
+
+
+            <div class="">
             </div>
 
-            <!-- Reminders -->
-            <div class="reminders">
-            </div>
-            <!-- End of Reminders-->
         </main>
     </div>
 </div>

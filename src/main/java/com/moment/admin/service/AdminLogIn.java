@@ -21,6 +21,7 @@ public class AdminLogIn implements Action{
 
         AdminDAO dao = AdminDAO.getInstance();
         int check = dao.adminCheck(adminId,adminPwd);
+
         PrintWriter out = response.getWriter();
         ActionForward forward = new ActionForward();
         HttpSession session = request.getSession();

@@ -24,7 +24,9 @@ public enum AdminSQL {
 
     // 공지사항 쿼리
 
-    SELECTION_NOTICE_LIST("SELECT * FROM notice ORDER BY notice_no DESC"),
+    COUNT_NOTICE("SELECT COUNT(*) FROM notice"),
+
+    SELECTION_NOTICE_LIST("SELECT * FROM notice ORDER BY notice_no DESC LIMIT ? OFFSET ?"),
 
     SELECTION_MAX_NOTICE_NO("SELECT IFNULL(MAX(notice_no), 0) + 1 FROM notice"),
 

@@ -16,7 +16,7 @@ public class AdminCont implements Action {
         // 요청 : 뷰 페이지에서 전달받은 adminNo(번호)를 기준으로 해당 관리자 정보를 조회하는 비즈니스 로직
         // 응답 : 조회된 관리자 정보를 JSON 형태로 응답
 
-        int adminNo = Integer.parseInt(request.getParameter("adminNo"));
+        int adminNo = Integer.parseInt(request.getParameter("adminNo").trim());
         System.out.println("adminNo : " + adminNo);
 
         AdminDAO dao = AdminDAO.getInstance();

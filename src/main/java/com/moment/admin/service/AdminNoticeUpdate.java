@@ -17,6 +17,12 @@ public class AdminNoticeUpdate implements Action {
         String insertWriter = request.getParameter("insertWriter").trim();
         String insertCont = request.getParameter("insertCont").trim();
 
+        System.out.println("noticeNo : " + noticeNo);
+        System.out.println("insertTitle : " + insertTitle);
+        System.out.println("insertWriter : " + insertWriter);
+        System.out.println("insertCont : " + insertCont);
+
+
         NoticeDTO dto = new NoticeDTO();
         dto.setNoticeNo(noticeNo);
         dto.setNoticeTitle(insertTitle);
