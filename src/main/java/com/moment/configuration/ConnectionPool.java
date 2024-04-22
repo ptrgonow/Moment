@@ -40,29 +40,4 @@ public class ConnectionPool {
         }
         return conn;
     }
-
-    public void disconnect(ResultSet rs, PreparedStatement pstmt, Connection conn) {
-
-        try {
-            if (rs != null) rs.close();
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
-            System.out.println(" rs, pstmt, conn 연결 해제 성공");
-
-        } catch (Exception e) {
-            System.out.println(" rs, pstmt, conn 연결 해제 실패" + e);
-        }
-    }
-
-    public void disconnect(PreparedStatement pstmt, Connection conn) {
-
-        try {
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
-            System.out.println(" pstmt, conn 연결 해제 성공");
-
-        } catch (Exception e) {
-            System.out.println(" pstmt, conn, 연결 해제 실패" + e);
-        }
-    }
 }

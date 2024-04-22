@@ -5,17 +5,14 @@ import com.moment.configuration.ConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShareDAO {
 
     private static ShareDAO instance = null;
-
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    ConnectionPool cp = null;
+    private ConnectionPool cp = null;
 
     private ShareDAO() {
         cp = ConnectionPool.getInstance();
@@ -28,81 +25,54 @@ public class ShareDAO {
         return instance;
     }
 
-    public void connect() {
-        conn = cp.connect();
-    }
-
-    public void disconnect(PreparedStatement pstmt, Connection conn) {
-        cp.disconnect(pstmt, conn);
-    }
-
-    public void disconnect(ResultSet rs, PreparedStatement pstmt, Connection conn) {
-        cp.disconnect(rs, pstmt, conn);
-    }
-
-    // 공유 게시판 리스트를 보여주는 메서드
     public List<ShareDTO> getShareList() {
         List<ShareDTO> list = new ArrayList<>();
-        ShareDTO dto = null;
-        connect();
+        String query = ShareSQL.SELECTION_SHARE_LIST.getQuery();
 
-        try {
-            pstmt = conn.prepareStatement(ShareSQL.SELECTION_SHARE_LIST.getQuery());
-            rs = pstmt.executeQuery();
+        try (Connection conn = cp.connect();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-
-                dto = new ShareDTO();
-
-                dto.setBoardNo(rs.getInt("board_no"));
-                dto.setBoardTitle(rs.getString("board_title"));
-                dto.setBoardWriter(rs.getString("board_writer"));
-                dto.setBoardCont(rs.getString("board_cont"));
-                dto.setBoardDate(rs.getString("board_date"));
-                dto.setBoardUpdate(rs.getString("board_update"));
-                dto.setBoardHit(rs.getInt("board_hit"));
-                dto.setBoardLike(rs.getInt("board_like"));
-
+                ShareDTO dto = getAll(rs);
                 list.add(dto);
             }
         } catch (Exception e) {
             System.out.println("getShareList() 에러 : " + e);
-        } finally {
-            disconnect(rs, pstmt, conn);
         }
         return list;
     }
 
-    // 상세정보를 보여주는 메서드
     public ShareDTO getShareContent(int boardNo) {
-
         ShareDTO dto = null;
-        connect();
+        String query = ShareSQL.CONTENT_SHARE.getQuery();
 
-        try {
-            pstmt = conn.prepareStatement(ShareSQL.CONTENT_SHARE.getQuery());
+        try (Connection conn = cp.connect();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
             pstmt.setInt(1, boardNo);
-            rs = pstmt.executeQuery();
 
-            if (rs.next()) {
-
-                dto = new ShareDTO();
-
-                dto.setBoardNo(rs.getInt("board_no"));
-                dto.setBoardTitle(rs.getString("board_title"));
-                dto.setBoardWriter(rs.getString("board_writer"));
-                dto.setBoardCont(rs.getString("board_cont"));
-                dto.setBoardDate(rs.getString("board_date"));
-                dto.setBoardUpdate(rs.getString("board_update"));
-                dto.setBoardHit(rs.getInt("board_hit"));
-                dto.setBoardLike(rs.getInt("board_like"));
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    dto = getAll(rs);
+                }
             }
         } catch (Exception e) {
             System.out.println("getShareContent() 에러 : " + e);
-        } finally {
-            disconnect(rs, pstmt, conn);
         }
         return dto;
     }
 
+    private ShareDTO getAll(ResultSet rs) throws SQLException, SQLException {
+        ShareDTO dto = new ShareDTO();
+        dto.setBoardNo(rs.getInt("board_no"));
+        dto.setBoardTitle(rs.getString("board_title"));
+        dto.setBoardWriter(rs.getString("board_writer"));
+        dto.setBoardCont(rs.getString("board_cont"));
+        dto.setBoardDate(rs.getString("board_date"));
+        dto.setBoardUpdate(rs.getString("board_update"));
+        dto.setBoardHit(rs.getInt("board_hit"));
+        dto.setBoardLike(rs.getInt("board_like"));
+        return dto;
+    }
 }
