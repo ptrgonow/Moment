@@ -88,9 +88,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 function hideAll() {
-    $('.notice-list, .notice-sub-list,' +
+    $(
+        '.notice-list, .notice-sub-list,' +
         '.admin-list, .admin-cont-list,' +
-        '.share-list, .share-cont-list').hide();
+        '.share-list, .share-cont-list' +
+        '.admin-add-list'
+
+    ).hide();
+
 }
 
 $('ul.side-menu a').click(function() {
@@ -106,7 +111,9 @@ $('ul.side-menu a').click(function() {
         case '관리자 목록':
             $('.admin-list').show();
             break;
-        // 추가적으로 필요한 경우에는 여기에 더 많은 case 문을 추가할 수 있습니다.
+        case '관리자 등록':
+            $('.admin-add-list').show();
+            break;
     }
 });
 
@@ -124,6 +131,7 @@ $(document).ready(function () {
     <div class="notice-list">
         <h2>공지사항</h2>
         <ul>
+       
         </ul>
     </div>
     `;
@@ -143,18 +151,18 @@ $(document).ready(function () {
                 const {noticeList, currentPageSize} = data;
                 $.each(noticeList, function (index, {noticeCont, noticeWriter, noticeDate, noticeNo, noticeTitle}) {
                     ul.append(`
-            <li>
-                <p class="noticeNo">${noticeNo}</p>
-                <p class="noticeTitle">${noticeTitle}</p>
-                <p class="noticeWriter">${noticeWriter}</p>
-                <p class="noticeCont">${noticeCont}</p>
-                <p class="noticeDate">${noticeDate}</p>
-                <div>
-                    <button class="noticeUpdate">수정</button>
-                    <button class="noticeDelete">삭제</button>
-                </div>
-            </li>
-        `);
+                        <li>
+                            <p class="noticeNo">${noticeNo}</p>
+                            <p class="noticeTitle">${noticeTitle}</p>
+                            <p class="noticeWriter">${noticeWriter}</p>
+                            <p class="noticeCont">${noticeCont}</p>
+                            <p class="noticeDate">${noticeDate}</p>
+                            <div>
+                                <button class="noticeUpdate">수정</button>
+                                <button class="noticeDelete">삭제</button>
+                            </div>
+                        </li>
+                    `);
                 });
                 ul.append(`
                 <div class="page-btn">
@@ -458,7 +466,7 @@ $(document).ready(function() {
     // 공유 게시판 리스트 템플릿
     const shareListTemplate = `
     <div class="share-list" >
-        <h1>게시글 목록</h1>
+        <h2>게시글 목록</h2>
         <ul>
         </ul>
     </div>
@@ -536,4 +544,72 @@ $(document).ready(function() {
             });
         }
     }
+});
+
+// =========================== 관리자 등록 ================================
+
+$(document).ready(function() {
+
+    const adminAddTemplate = `
+        <div class="admin-add-list" style="display: none;">
+            <form action="admin_member_add.go" method="post">
+                <h2>관리자 등록</h2>
+                    <ul>
+                       
+                    </ul>
+            </form>
+    `;
+
+    $('#insight-tbl-admin-add').html(adminAddTemplate);
+    getAdminInfo();
+
+    function getAdminInfo() {
+        $.ajax({
+            url: 'admin_list.go',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                const ul = $('.admin-add-list ul');
+                ul.empty();
+                $.each(data, function(index, {adminGrade, adminTeam}) {
+
+                    ul.append(`
+                        <li>
+                            <input type="text" class="id" name="adminId" placeholder="아이디">
+                        </li>
+                        <li>
+                            <input type="password" class="pwd" name="adminPwd" placeholder="비밀번호">
+                        </li>
+                        <li>
+                            <input type="text" class="name" name="adminName" placeholder="이름">
+                        </li>
+                        <li>
+                            <input type="text" class="phone" name="adminPhone" placeholder="전화번호">
+                        </li>
+                        <li>
+                            <input type="text" class="addr" name="adminAddr" placeholder="주소">
+                        </li>
+                        <li>
+                            <input type="date" class="birth" name="adminBirth" placeholder="생년월일">
+                        </li>
+                        <li>
+                            <select class="team" name="adminTeam">
+                                ${adminTeam.map(team => `<option value="${team}">${team}</option>`).join('')}
+                            </select>
+                        </li>
+                        <li>
+                            <select class="grade" name="adminGrade">
+                                ${adminGrade.map(grade => `<option value="${grade}">${grade}</option>`).join('')}
+                            </select>
+                        </li>
+                    `);
+                });
+            }
+        })
+    }
+
+
+
+
+
 });

@@ -123,4 +123,21 @@ public class AdminDAO {
     }
 
 
+    public int adminInput(AdminDTO dto) {
+        int result = 0;
+
+        try(Connection conn = cp.connect();
+            PreparedStatement pstmt = createPreparedStatement(conn, AdminSQL.INSERT_ADMIN.getQuery(),
+                    dto.getAdminId(), dto.getAdminPwd(), dto.getAdminName(),
+                    dto.getAdminPhone(), dto.getAdminAddr(), dto.getAdminBirth(),
+                    dto.getAdminGrade(), dto.getAdminTeam())) {
+
+            result = pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("adminInput() 에러 : " + e);
+        }
+
+        return result;
+    }
 }

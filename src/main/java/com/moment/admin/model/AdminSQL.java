@@ -48,6 +48,13 @@ public enum AdminSQL {
 
     ADMIN_LOGIN_CHECK("select * from admin where admin_Id = ?"),
 
+    // 관리자 등록
+
+    INSERT_ADMIN("INSERT INTO admin VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"),
+
+    SELECTION_MAX_ADMIN_NO("SELECT IFNULL(MAX(admin_no), 0) FROM admin"),
+
+    SELECTION_ADMIN("SELECT * FROM admin ORDER BY admin_no DESC")
 
     ;
 

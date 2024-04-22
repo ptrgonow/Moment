@@ -177,7 +177,7 @@
             <div id="insight-tbl-notice" class="bottom-data"></div>
             <div id="insight-tbl-share" class="bottom-data"></div>
             <div id="insight-tbl-member" class="bottom-data"></div>
-            <div id="insight-tbl-add" class="bottom-data"></div>
+            <div id="insight-tbl-admin-add" class="bottom-data"></div>
 
 
             <div class="">
@@ -187,8 +187,14 @@
     </div>
 </div>
 
+
+
+
+
+
 <!-- Jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="<c:url value="/JS/Admin/AdminMain.js"/>"></script>
 <script src="<c:url value="/JS/Admin/AdminLogin.js"/>"></script>
 
