@@ -23,6 +23,8 @@ public class AdminSignUp implements Action {
             String adminGrade = request.getParameter("admin_grade").trim();
             String adminTeam = request.getParameter("admin_team").trim();
 
+
+
             AdminDTO dto = new AdminDTO();
             dto.setAdminId(adminId);
             dto.setAdminPwd(adminPwd);

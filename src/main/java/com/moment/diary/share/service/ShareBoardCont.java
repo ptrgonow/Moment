@@ -16,7 +16,7 @@ public class ShareBoardCont implements Action {
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         int boardNo = Integer.parseInt(request.getParameter("boardNo").trim());
-        System.out.println("게시판 번호" + boardNo);
+
         ShareDAO dao = ShareDAO.getInstance();
         ShareDTO dto = dao.getShareContent(boardNo);
 

@@ -4,21 +4,28 @@ import com.google.gson.Gson;
 import com.moment.action.Action;
 import com.moment.action.ActionForward;
 import com.moment.admin.model.AdminDAO;
-import com.moment.admin.model.AdminDTO;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AdminSelectColumn implements Action {
     @Override
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         AdminDAO dao = AdminDAO.getInstance();
-        AdminDTO col = dao.getSelectColumn();
+        List<String> team = dao.getSelectTeam();
+        List<String> grade = dao.getSelectGrade();
+
+        Map<String, List<String>> map = new HashMap<>();
+        map.put("teams", team);
+        map.put("grades", grade);
+
 
     // Write the JSON to the response
         Gson gson = new Gson();
-        String json = gson.toJson(col);
+        String json = gson.toJson(map);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

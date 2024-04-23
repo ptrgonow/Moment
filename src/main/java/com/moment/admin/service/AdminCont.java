@@ -17,7 +17,6 @@ public class AdminCont implements Action {
         // 응답 : 조회된 관리자 정보를 JSON 형태로 응답
 
         int adminNo = Integer.parseInt(request.getParameter("adminNo").trim());
-        System.out.println("adminNo : " + adminNo);
 
         AdminDAO dao = AdminDAO.getInstance();
         AdminDTO adminCont = dao.getAdminCont(adminNo);

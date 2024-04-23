@@ -57,7 +57,9 @@ public enum AdminSQL {
     SELECTION_ADMIN("SELECT * FROM admin ORDER BY admin_no DESC"),
 
     // 테이블에서 grade 와 team 컬럼의 정보를 중복제거 해서 가져오기
-    SELECT_COLUMN("SELECT DISTINCT admin_grade, admin_team FROM admin")
+    SELECT_COLUMN_TEAM("SELECT DISTINCT admin_team FROM admin"),
+
+    SELECT_COLUMN_GRADE("SELECT DISTINCT admin_grade FROM admin")
 
 
 

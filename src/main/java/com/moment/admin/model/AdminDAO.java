@@ -142,22 +142,39 @@ public class AdminDAO {
     }
 
 
-    public AdminDTO getSelectColumn() {
-        AdminDTO dto = null;
+    public List<String> getSelectTeam() {
+        List<String> list = new ArrayList<>();
 
         try (Connection conn = cp.connect();
-             PreparedStatement pstmt = createPreparedStatement(conn, AdminSQL.SELECT_COLUMN.getQuery());
+             PreparedStatement pstmt = createPreparedStatement(conn, AdminSQL.SELECT_COLUMN_TEAM.getQuery());
              ResultSet rs = pstmt.executeQuery()) {
 
-            if (rs.next()) {
-                dto = createAdminDTO(rs);
+            while (rs.next()) {
+                AdminDTO dto = new AdminDTO();
+                dto.setAdminTeam(rs.getString("admin_team"));
+                list.add(dto.getAdminTeam());
             }
-
         } catch (Exception e) {
-            System.out.println("getSelectColumn() 에러 : " + e);
+            System.out.println("getSelectTeam() 에러 : " + e);
         }
+        return list;
+    }
 
-        return dto;
+    public List<String> getSelectGrade( ) {
+        List<String> list = new ArrayList<>();
 
+        try (Connection conn = cp.connect();
+             PreparedStatement pstmt = createPreparedStatement(conn, AdminSQL.SELECT_COLUMN_GRADE.getQuery());
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                AdminDTO dto = new AdminDTO();
+                dto.setAdminGrade(rs.getString("admin_grade"));
+                list.add(dto.getAdminGrade());
+            }
+        } catch (Exception e) {
+            System.out.println("getSelectTeam() 에러 : " + e);
+        }
+        return list;
     }
 }

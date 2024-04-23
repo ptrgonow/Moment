@@ -97,7 +97,7 @@
                 <li>
                     <span class="info">
                         <h3>
-                            \${totalDiary} 건
+
                         </h3>
                         <p>등록 게시글</p>
                         <small>Last 24 Hour</small>
@@ -106,7 +106,7 @@
                 <li>
                     <span class="info">
                         <h3>
-                            \${NewMember} 명
+
                         </h3>
                         <p>신규 가입자</p>
                         <small>Last 24 Hour</small>
@@ -115,7 +115,7 @@
                 <li>
                     <span class="info">
                         <h3>
-                            \${totalShare} 건
+
                         </h3>
                         <p>공유 게시글</p>
                         <small>Last 24 Hour</small>
@@ -124,7 +124,7 @@
                 <li>
                     <span class="info">
                         <h3>
-                            \${totalWriter} 명
+
                         </h3>
                         <p>작성자</p>
                         <small>Last 24 Hour</small>
@@ -138,7 +138,7 @@
                 <li>
                     <span class="info">
                         <h3>
-                            \${totalProduct} 개
+
                         </h3>
                         <p>등록 상품</p>
                         <small>Last 24 Hour</small>
@@ -147,7 +147,7 @@
                 <li>
                     <span class="info">
                         <h3>
-                            \${totalGuest} 명
+
                         </h3>
                         <p>총 방문자</p>
                         <small>Last 24 Hour</small>
@@ -156,7 +156,7 @@
                 <li>
                     <span class="info">
                         <h3>
-                            \${totalOrder} 건
+
                         </h3>
                         <p>총 주문량</p>
                         <small>Last 24 Hour</small>
@@ -165,7 +165,7 @@
                 <li>
                     <span class="info">
                         <h3>
-                            \${totalSales} 원
+
                         </h3>
                         <p>총 판매액</p>
                         <small>Last 24 Hour</small>

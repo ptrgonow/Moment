@@ -63,7 +63,7 @@ public class ShareDAO {
         return dto;
     }
 
-    private ShareDTO getAll(ResultSet rs) throws SQLException, SQLException {
+    private ShareDTO getAll(ResultSet rs) throws SQLException {
         ShareDTO dto = new ShareDTO();
         dto.setBoardNo(rs.getInt("board_no"));
         dto.setBoardTitle(rs.getString("board_title"));
