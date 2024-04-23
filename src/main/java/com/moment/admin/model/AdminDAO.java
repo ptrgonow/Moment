@@ -140,4 +140,24 @@ public class AdminDAO {
 
         return result;
     }
+
+
+    public AdminDTO getSelectColumn() {
+        AdminDTO dto = null;
+
+        try (Connection conn = cp.connect();
+             PreparedStatement pstmt = createPreparedStatement(conn, AdminSQL.SELECT_COLUMN.getQuery());
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (rs.next()) {
+                dto = createAdminDTO(rs);
+            }
+
+        } catch (Exception e) {
+            System.out.println("getSelectColumn() 에러 : " + e);
+        }
+
+        return dto;
+
+    }
 }

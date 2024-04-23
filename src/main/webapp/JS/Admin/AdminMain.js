@@ -565,77 +565,85 @@ $(document).ready(function() {
 
     function getAdminInfo() {
         $.ajax({
-            url: 'admin_list.go',
+            url: 'admin_column.go',
             type: 'GET',
             dataType: 'json',
             success: function(data) {
                 const ul = $('.admin-add-list ul');
                 ul.empty(); // 기존에 있는 폼 삭제
+                // 팀과 등급 선택 요소에 옵션 추가
+                let teamOptions = '<option value="">팀 선택</option>';
+                let gradeOptions = '<option value="">등급 선택</option>';
+
+                data.teams.forEach(function(team) {
+                    teamOptions += `<option value="${team}">${team}</option>`;
+                });
+
+                data.grades.forEach(function(grade) {
+                    gradeOptions += `<option value="${grade}">${grade}</option>`;
+                });
 
                 // 폼을 한 번만 추가
                 ul.append(`
-                <li>
-                    <input type="text" class="id" name="adminId" placeholder="아이디">
-                </li>
-                <li>
-                    <input type="password" class="pwd" name="adminPwd" placeholder="비밀번호">
-                </li>
-                <li>
-                    <input type="text" class="name" name="adminName" placeholder="이름">
-                </li>
-                <li>
-                    <input type="text" class="phone" name="adminPhone" placeholder="전화번호">
-                </li>
-                <li>
-                    <input type="text" class="addr" name="adminAddr" placeholder="주소">
-                </li>
-                <li>
-                    <input type="date" class="birth" name="adminBirth" placeholder="생년월일">
-                </li>
-                <li>
-                    <select class="team" name="adminTeam">
-                        <option value="">팀 선택</option>
-                    </select>
-                </li>
-                <li>
-                    <select class="grade" name="adminGrade">
-                        <option value="">등급 선택</option>
-                    </select>
-                </li>
-            `);
-
-                // 데이터에 따라 팀과 등급 옵션 추가
-                const teamSelect = ul.find('.team');
-                const gradeSelect = ul.find('.grade');
-
-                const uniqueTeams = new Set();
-                const uniqueGrades = new Set();
-
-                 // 중복 제거된 팀과 등급을 확인하면서 옵션 추가
-                data.forEach(adminData => {
-                    const {adminGrade, adminTeam} = adminData;
-                    if ( Array.isArray(adminTeam) ) {
-                        adminTeam.forEach(team => uniqueTeams.add(team));
-                    } else {
-                        uniqueTeams.add(adminTeam);
-                    }
-                    if ( Array.isArray(adminGrade) ) {
-                        adminGrade.forEach(grade => uniqueGrades.add(grade));
-                    } else {
-                        uniqueGrades.add(adminGrade);
-                    }
-                });
-
-                // 중복 제거된 팀과 등급 옵션 추가
-                uniqueTeams.forEach(team => {
-                    teamSelect.append(`<option value="${team}">${team}</option>`);
-                });
-                uniqueGrades.forEach(grade => {
-                    gradeSelect.append(`<option value="${grade}">${grade}</option>`);
-                });
+                    <li>
+                        <input type="text" class="id" name="adminId" placeholder="아이디">
+                    </li>
+                    <li>
+                        <input type="password" class="pwd" name="adminPwd" placeholder="비밀번호">
+                    </li>
+                    <li>
+                        <input type="text" class="name" name="adminName" placeholder="이름">
+                    </li>
+                    <li>
+                        <input type="text" class="phone" name="adminPhone" placeholder="전화번호">
+                    </li>
+                    <li>
+                        <input type="text" class="addr" name="adminAddr" placeholder="주소">
+                    </li>
+                    <li>
+                        <input type="date" class="birth" name="adminBirth" placeholder="생년월일">
+                    </li>
+                    <li>
+                        <select class="team" name="adminTeam">
+                            ${teamOptions}
+                        </select>
+                    </li>
+                    <li>
+                        <select class="grade" name="adminGrade">
+                            ${gradeOptions}
+                        </select>
+                    </li>
+                    <li>
+                        <input type="submit" value="등록">
+                    </li>
+                `);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error loading member list: ' + textStatus + ' ' + errorThrown);
             }
+
+        });
+
+
+
+        $('#insight-tbl-admin-add').on('submit', 'form', function(e) {
+
+
+
+
         });
     }
+
+
+
+
+
+
+
+
+
+
+
 });
 
 

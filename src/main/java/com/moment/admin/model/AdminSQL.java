@@ -54,7 +54,12 @@ public enum AdminSQL {
 
     SELECTION_MAX_ADMIN_NO("SELECT IFNULL(MAX(admin_no), 0) FROM admin"),
 
-    SELECTION_ADMIN("SELECT * FROM admin ORDER BY admin_no DESC")
+    SELECTION_ADMIN("SELECT * FROM admin ORDER BY admin_no DESC"),
+
+    // 테이블에서 grade 와 team 컬럼의 정보를 중복제거 해서 가져오기
+    SELECT_COLUMN("SELECT DISTINCT admin_grade, admin_team FROM admin")
+
+
 
     ;
 
