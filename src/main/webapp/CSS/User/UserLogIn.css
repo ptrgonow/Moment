@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat");
+
+.Container {
+    position: absolute;
+    top: 50%;
+    left: 70%;
+}
+
+.Picture {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 5px solid #fff;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    transform: translate(-50%, -50%);
+    user-select: none;
+    cursor: pointer;
+}
+
+.Picture-img {
+    display: block;
+    width: 300px;
+    height: 300px;
+    pointer-events: none;
+}
+
+.Picture-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 70px;
+    padding: 12px 24px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.Network {
+    display: inline-block;
+    padding: 0 5px;
+}
+
+.Network img {
+    width: 1.5rem;
+    aspect-ratio: 1 / 1;
+    vertical-align: middle;
+}
+
+/* --------------------- */
+/* Other styles          */
+/* --------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Caveat', serif;
+    overflow: hidden;
+    font-size: 16px;
+}
+
+.Me {
+    position: fixed;
+    z-index: 15;
+    bottom: 20px;
+    left: 50%;
+    color: #111;
+    transform: translateX(-50%);
+    font-weight: 700;
+    text-align: center;
+    opacity: 0.7;
+}
+
+body div.logo-box {
+    width: 50vw;
+    height: 50vh;
+    margin-top: 15%;
+}
+
+body div.logo-box img {
+    width: 100%;
+    height: 100%;
+}
+
+
+#login {
+    width: 310px;
+    height: 650px;
+}
+
+
+.login-tbl input,
+.sign-tbl input {
+
+    width: 80%;
+    padding: 0.5rem;
+    margin: 1rem 0 0.5rem 1rem;
+    display: inline-block;
+    border: none;
+    border-radius: 10px;
+    background: #f1f1f1;
+    outline: none;
+}
+
+.sub-td {
+    text-align: center;
+}
+
+.login-tbl input[type="submit"],
+.sign-tbl input[type="submit"] {
+    width: 40%;
+    margin: 1rem 0 0.5rem 1rem;
+    background: #ADC6E1;
+    color: #fff;
+    cursor: pointer;
+}
+
+.login-tbl input[type="submit"]:hover {
+    background: #3D5A80;
+    animation: shake 0.5s;
+}
+
+.Picture-note .bi-pencil {
+    color: #ADC6E1;
+    margin-left: 100px;
+}
+
+.Picture-note .bi-pencil:hover {
+
+    color: #3D5A80;
+}
+
+.login-container,
+.signup-container {
+    text-align: -webkit-center;
+    transition: all 0.5s ease;
+}
+
+.signup-container {
+    display: none;
+}
+.s-btn {
+    position: fixed;
+    bottom: 20px;
+    display: block;
+}
+
+.l-btn {
+    position: fixed;
+    bottom: 20px;
+    display: none;
+}
