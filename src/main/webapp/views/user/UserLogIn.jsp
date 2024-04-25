@@ -27,7 +27,7 @@
     <!-- last card -->
     <div class="Picture">
         <img class="Picture-img" src="<c:url value="/image/logoprint.svg"/>" alt=""/>
-        <div class="Picture-note"><span>Moment-<a class="Network" href="https://www.naver.com" target="_top"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111501.png" alt="네이버" /></a><a class="Network" href="https://google.com" target="_top"><img src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-logo-vector-png-clipart-1.png" alt="twitter" /></a></span></div>
+        <div class="Picture-note"><span>Moment-<a class="Network" href="admin.go" target="_top"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111501.png" alt="네이버" /></a><a class="Network" href="admin_login.go" target="_top"><img src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-logo-vector-png-clipart-1.png" alt="twitter" /></a></span></div>
     </div>
 
     <!-- other cards -->
@@ -94,8 +94,6 @@
                     </tr>
                 </table>
             </form>
-            <input type="button" value="관리자" onclick="location.href='admin_login.go'">
-            <input type="button" value="테스트" onclick="location.href='admin.go'">
         </div>
         <div class="signup-container">
             <img class="Picture-img" src="<c:url value="/image/logoprint.svg"/>" alt=""/>

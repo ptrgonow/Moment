@@ -86,8 +86,7 @@ loginInputs.forEach(input => {
 });
 signupInputs.forEach(input => {
     input.addEventListener('mousedown', (event) => {
-        event.stopPropagation(); // mousedown 이벤트의 전파를 중단 (버블링 방지)
-        // mousedown 이벤트가 부모 요소(사진)에게 전달되지 않아, 드래그 이벤트를 시작하는 것을 막을 수 있다
+        event.stopPropagation();
     });
 });
 
