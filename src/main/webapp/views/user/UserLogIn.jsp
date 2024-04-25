@@ -97,7 +97,7 @@
         </div>
         <div class="signup-container">
             <img class="Picture-img" src="<c:url value="/image/logoprint.svg"/>" alt=""/>
-            <form action="user_signup,go" method="post">
+            <form action="user_signup.go" method="post">
                 <table class="sign-tbl">
                     <tr>
                         <th>id</th>
