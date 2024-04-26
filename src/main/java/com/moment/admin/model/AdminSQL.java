@@ -29,7 +29,7 @@ public enum AdminSQL {
     SELECTION_NOTICE_LIST("select * from (select row_number() over(order by notice_no desc) rnum, n.* from notice n)where rnum >= ? and rnum <= ?"),
 
     SELECTION_MAX_NOTICE_NO("SELECT COALESCE(MAX(notice_no), 0) + 1 FROM notice"),
-
+ 
     INSERT_NOTICE("INSERT INTO notice VALUES (?, ?, ?, ?, now())"),
 
     DELETE_NOTICE("DELETE FROM notice WHERE notice_no = ?"),
@@ -40,10 +40,11 @@ public enum AdminSQL {
 
     // 관리자 목록
 
-    GET_ADMIN_LIST("SELECT * FROM admin"),
+    GET_ADMIN_LIST("select * from (select row_number() over(order by admin_no desc) rnum, a.* from admin a)where rnum >= ? and rnum <= ?"),
 
     GET_ADMIN_CONT("SELECT * FROM admin WHERE admin_no = ?"),
 
+    COUNT_ADMIN("SELECT COUNT(*) FROM admin"),
     // 관리자 로그인
 
     ADMIN_LOGIN_CHECK("select * from admin where admin_Id = ?"),

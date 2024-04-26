@@ -5,8 +5,10 @@ import com.moment.configuration.ConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentNavigableMap;
 
 public class AdminDAO {
 
@@ -25,6 +27,23 @@ public class AdminDAO {
         return instance;
     }
 
+    public int getTotalAdminCount() {
+        int count = 0;
+
+        try (Connection conn = cp.connect();
+             PreparedStatement pstmt = conn.prepareStatement(AdminSQL.COUNT_ADMIN.getQuery());
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("어드민 수 조회 에러 : " + e);
+        }
+
+        return count;
+    }
+    
     private AdminDTO createAdminDTO(ResultSet rs) throws Exception {
         AdminDTO dto = new AdminDTO();
         dto.setAdminNo(rs.getInt("admin_no"));
@@ -47,15 +66,23 @@ public class AdminDAO {
         return pstmt;
     }
 
-    public List<AdminDTO> getAdminList() {
+    public List<AdminDTO> getAdminList(int page, int size) {
         List<AdminDTO> list = new ArrayList<>();
+        
+        int startNo = (page * size) - (size - 1);
+        int endNo = (page * size);
+        
         try (Connection conn = cp.connect();
-             PreparedStatement pstmt = createPreparedStatement(conn, AdminSQL.GET_ADMIN_LIST.getQuery());
-             ResultSet rs = pstmt.executeQuery()) {
-
-            while (rs.next()) {
-                list.add(createAdminDTO(rs));
+             PreparedStatement pstmt = conn.prepareStatement(AdminSQL.GET_ADMIN_LIST.getQuery())){
+            	 pstmt.setInt(1, startNo);
+            	 pstmt.setInt(2, endNo);
+            	 
+            	 try(ResultSet rs = pstmt.executeQuery()){
+        	
+        		while (rs.next()) {
+        			list.add(createAdminDTO(rs));
             }
+        }
 
         } catch (Exception e) {
             System.out.println("getAdminList() 에러 : " + e);

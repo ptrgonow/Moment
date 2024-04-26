@@ -372,6 +372,10 @@ $(document).ready(function () {
 
 $(document).ready(function() {
 
+	let currentPage = 1;
+    const pageSize = 5;
+    let lastPage = 1;
+
     const memberListTemplate = `
     <div class="admin-list">
         <h2>관리자</h2>
@@ -395,11 +399,13 @@ $(document).ready(function() {
         $.ajax({
             url: 'admin_list.go',
             type: 'GET',
+            data: { page: currentPage, size: pageSize },
             dataType: 'json',
             success: function(data) {
                 const ul = $('.admin-list ul');
                 ul.empty();
-                $.each(data, function(index, {adminId, adminName, adminGrade, adminTeam, adminNo}) {
+                const {adminList, currentPageSize} = data;
+                $.each(adminList, function(index, {adminId, adminName, adminGrade, adminTeam, adminNo}) {
                     ul.append(`
                 <li>
                     <p class="adminNo">${adminNo}</p>
@@ -408,14 +414,70 @@ $(document).ready(function() {
                     <p class="adminGrade">${adminGrade}</p>
                     <p class="adminTeam">${adminTeam}</p>
                 </li>
-                `);
+                   `);
                 });
+                ul.append(`
+                <div class="page-btn">
+                    <span id="adminpageNumbers"></span>
+                </div>
+       		 `);
+                ({lastPage} = data);  // 서버에서 반환한 마지막 페이지 번호를 저장
+                updateAdminPageNumbers(currentPageSize);
             },
+                      
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('Error loading member list: ' + textStatus + ' ' + errorThrown);
-            }
-        });
+            	}
+        	});
+		}
+		
+		function updateAdminPageNumbers(currentPageSize) {
+        const adminpageNumbers = $('#adminpageNumbers');
+        adminpageNumbers.empty();
 
+        // '처음' 버튼 추가
+        adminpageNumbers.append(`<button class="adminpageNumber first" data-page="1">처음</button>`);
+        // '<' 버튼 추가
+        if (currentPage > 1) {
+            adminpageNumbers.append(`<button class="adminpageNumber" data-page="${currentPage - 1}"><</button>`);
+        }
+
+        // 페이지 번호 버튼 추가
+       let startPage = Math.max(1, (Math.ceil(currentPage / pageSize) - 1) * pageSize + 1);
+	   let endPage = Math.min(startPage + pageSize - 1, lastPage);
+
+
+		for (let i = startPage; i <= endPage; i++) {
+        if (i <= lastPage) { // 마지막 페이지를 초과하는 페이지 번호는 출력하지 않음
+            if (i === currentPage) {
+                adminpageNumbers.append(`<button class="adminpageNumber current" data-page="${i}">${i}</button>`);
+            } else {
+                adminpageNumbers.append(`<button class="adminpageNumber other" data-page="${i}">${i}</button>`);
+            }
+          }
+    	}
+
+        // '>' 버튼 추가
+        if (currentPageSize >= 5) {
+            adminpageNumbers.append(`<button class="adminpageNumber" data-page="${currentPage + 1}">></button>`);
+        }
+
+        // '마지막' 버튼 추가
+        adminpageNumbers.append(`<button class="adminpageNumber last" data-page="last">마지막</button>`);
+    }
+
+    $(document).on('click', '.adminpageNumber', function() {
+        const page = $(this).data('page');
+
+        if (page === 'last') {
+            currentPage = lastPage;
+        } else {
+            currentPage = parseInt(page);
+        }
+        getMemberList();
+    });
+
+		
         $('.admin-list').after(AdminContTemplate);
 
         $('.admin-list').on('click', 'li', function(e) {
@@ -483,9 +545,6 @@ $(document).ready(function() {
                 }
             });
         });
-    }
-
-
 });
 
 // =========================== 게시판 목록 =================================
