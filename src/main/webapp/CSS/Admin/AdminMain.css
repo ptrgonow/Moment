@@ -515,14 +515,14 @@ body{
     border: none;
     outline: none;
     cursor: pointer;
-    background-color: var(--clr-white);
+    background-color: var(--light);
 }
 .notice-list li div button.noticeDelete {
     color: var(--danger);
     border: none;
     outline: none;
     cursor: pointer;
-    background-color: var(--clr-white);
+    background-color: var(--light);
 }
 
 .notice-list li div button.noticeUpdate:hover,

@@ -1,4 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat");
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+
+
+
+/*         card styles          */
 
 .Container {
     position: absolute;
@@ -49,19 +53,27 @@
     vertical-align: middle;
 }
 
-/* --------------------- */
-/* Other styles          */
-/* --------------------- */
+
+/*         styles          */
+
 
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    transition: border-radius 0.1s;
 }
 
 body {
     margin: 0;
-    font-family: 'Caveat', serif;
+    font-family: 'Nanum Pen Script', cursive;
     overflow: hidden;
     font-size: 16px;
+    background-image: url(/image/logoprint.svg);
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: left 30% center;
+
 }
 
 .Me {
@@ -97,7 +109,7 @@ body div.logo-box img {
 .login-tbl input,
 .sign-tbl input {
 
-    width: 80%;
+    width: 90%;
     padding: 0.5rem;
     margin: 1rem 0 0.5rem 1rem;
     display: inline-block;
@@ -127,11 +139,10 @@ body div.logo-box img {
 
 .Picture-note .bi-pencil {
     color: #ADC6E1;
-    margin-left: 100px;
+    margin-left: 5rem;
 }
 
 .Picture-note .bi-pencil:hover {
-
     color: #3D5A80;
 }
 
@@ -144,14 +155,56 @@ body div.logo-box img {
 .signup-container {
     display: none;
 }
-.s-btn {
+
+.btn-control {
+    display: inline-flex;
     position: fixed;
-    bottom: 20px;
+    width: 100%;
+    margin: 2rem 0;
+    bottom: -10px;
+}
+
+
+.s-btn {
+
     display: block;
 }
 
 .l-btn {
-    position: fixed;
-    bottom: 20px;
+
     display: none;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 3%;
+    background: #ADC6E1;
+    color: #fff;
+    font-size: 1.5rem;
+    position: fixed;
+    bottom: -100%;
+    transition: bottom 0.5s;
+}
+
+.footer-container.show {
+    bottom: 0;
+}
+
+.footer-logo img {
+    height: 5rem;
+}
+
+.footer-info {
+    width: 100%;
+}
+
+.footer-info ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 3rem;
+
 }

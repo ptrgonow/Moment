@@ -26,7 +26,7 @@
 
 <div class="container">
     <div class="sidebar">
-        <a href="user_login.go" class="logo">
+        <a href="user_login_test.go" class="logo">
             <i class="bi bi-journal-bookmark"></i>
             <div class="logo-name"><span>Our</span>Moment</div>
         </a>

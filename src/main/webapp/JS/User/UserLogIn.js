@@ -1,4 +1,57 @@
 
+
+// 개발기간 표시
+window.onload = function() {
+    // 현재 날짜를 가져옵니다.
+    let currentDate = new Date();
+
+    // 날짜를 원하는 형식으로 변환합니다.
+    let year = currentDate.getFullYear();
+    let month = String(currentDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더해줍니다.
+    let day = String(currentDate.getDate()).padStart(2, '0');
+
+    let formattedDate = `${year}.${month}.${day}`;
+
+    // HTML 요소를 선택하고, 텍스트 내용을 업데이트합니다.
+    let developmentPeriodElement = document.querySelector('.devTime');
+    developmentPeriodElement.textContent = `개발기간 : 2024.04.03 ~ ${formattedDate}`;
+}
+
+// 마우스가 페이지 최하단에 위치했을 때 footer 를 보여주는 이벤트
+window.addEventListener('mousemove', function(e) {
+    let isMouseInFooter = false;
+    let hideFooterTimeout;
+
+    const footer = document.querySelector('.footer-container');
+
+    footer.addEventListener('mouseover', function() {
+        isMouseInFooter = true;
+        footer.classList.add('show');
+    });
+
+    footer.addEventListener('mouseout', function() {
+        isMouseInFooter = false;
+        // 마우스가 푸터 영역에서 벗어났을 때 500ms 후에 푸터를 숨깁니다.
+        hideFooterTimeout = setTimeout(() => {
+            if (!isMouseInFooter) {
+                footer.classList.remove('show');
+            }
+        }, 1000);
+    });
+
+
+    window.addEventListener('mousemove', function(e) {
+        if (e.clientY >= (window.innerHeight - window.innerHeight * 0.05)) { // 마우스가 페이지 하단 5vh 영역에 위치했는지 확인
+            clearTimeout(hideFooterTimeout); // 푸터를 숨기는 타이머를 취소합니다.
+            footer.classList.add('show'); // .show 클래스 추가
+        } else if (!isMouseInFooter) {
+            footer.classList.remove('show'); // .show 클래스 제거
+        }
+    });
+});
+
+
+
 // 페이지가 열리면 로그인 폼의 아이디 인풋칸에 커서가 자동으로 위치하게 하는 이벤트
 document.addEventListener('DOMContentLoaded', (event) => {
     const useridInput = document.querySelector('.user_id');
@@ -90,11 +143,13 @@ signupInputs.forEach(input => {
     });
 });
 
+// 로그인 화면과 회원가입 화면을 전환하는 이벤트
 document.addEventListener('DOMContentLoaded', (event) => {
     const signupPencil = document.querySelector('.s-btn .bi-pencil');
     const loginPencil = document.querySelector('.l-btn .bi-pencil');
     const loginContainer = document.querySelector('.login-container');
     const signupContainer = document.querySelector('.signup-container');
+    const useridInput = document.querySelector('.user_id');
     const signupIdInput = document.querySelector('.sign-id');
     const sBtn = document.querySelector('.s-btn');
     const lBtn = document.querySelector('.l-btn');
@@ -123,6 +178,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 loginContainer.style.display = 'block';
                 setTimeout(() => {
                     loginContainer.style.opacity = '1';
+                    useridInput.focus();
                 }, 50);
             }, 500);
             sBtn.style.display = 'block';
