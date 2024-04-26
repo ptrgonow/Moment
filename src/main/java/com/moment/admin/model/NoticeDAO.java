@@ -46,13 +46,14 @@ public class NoticeDAO {
     public List<NoticeDTO> getNoticeList(int page, int size) {
         List<NoticeDTO> list = new ArrayList<>();
 
-        int offset = (page - 1) * size;
+        int startNo = (page * size) - (size - 1);
+        int endNo = (page * size);
 
 
         try (Connection conn = cp.connect();
              PreparedStatement pstmt = conn.prepareStatement(AdminSQL.SELECTION_NOTICE_LIST.getQuery())) {
-            pstmt.setInt(1, size);
-            pstmt.setInt(2, offset);
+            pstmt.setInt(1, startNo); 
+            pstmt.setInt(2, endNo);
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {

@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
+// =========================== 사이드 바 액션 ======================================
 
 function hideAll() {
     $(
@@ -95,7 +96,6 @@ function hideAll() {
         '.admin-add-list'
 
     ).hide();
-
 }
 
 $('ul.side-menu a').click(function() {
@@ -118,8 +118,38 @@ $('ul.side-menu a').click(function() {
 });
 
 
-// =========================== 공지 ======================================
 
+// =========================== 인사이트 정보 ===============================
+
+$(document).ready(function() {
+    $.ajax({
+        url: 'insight_info.go',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            // 서버에서 반환된 데이터를 사용하여 페이지 업데이트
+            $('.insights-diary li:nth-child(1) h3').text(data.todayDiaryCount + ' 건');
+            /*$('.insights-diary li:nth-child(2) h3').text(data.NewMember + ' 명');
+            $('.insights-diary li:nth-child(3) h3').text(data.totalShare + ' 건');*/
+            $('.insights-diary li:nth-child(4) h3').text(data.todayWriteCount + ' 명');
+
+           /* $('.insights-product li:nth-child(1) h3').text(data.totalProduct + ' 개');
+            $('.insights-product li:nth-child(2) h3').text(data.totalGuest + ' 명');
+            $('.insights-product li:nth-child(3) h3').text(data.totalOrder + ' 건');
+            $('.insights-product li:nth-child(4) h3').text(data.totalSales + ' 원');*/
+
+            // 갱신
+            
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + textStatus + ' ' + errorThrown);
+        }
+    });
+});
+
+
+
+// =========================== 공지 ======================================
 
 $(document).ready(function () {
 
@@ -193,18 +223,19 @@ $(document).ready(function () {
         }
 
         // 페이지 번호 버튼 추가
-        let startPage = currentPage - 1;
-        let endPage = currentPage + 1;
+       let startPage = Math.max(1, (Math.ceil(currentPage / pageSize) - 1) * pageSize + 1);
+	   let endPage = Math.min(startPage + pageSize - 1, lastPage);
 
-        for (let i = startPage; i <= endPage; i++) {
-            if (i > 0 && !(i === currentPage + 1 && currentPageSize < 5)) {
-                if (i === currentPage) {
-                    pageNumbers.append(`<button class="pageNumber current" data-page="${i}">${i}</button>`);
-                } else {
-                    pageNumbers.append(`<button class="pageNumber other" data-page="${i}">${i}</button>`);
-                }
+
+		for (let i = startPage; i <= endPage; i++) {
+        if (i <= lastPage) { // 마지막 페이지를 초과하는 페이지 번호는 출력하지 않음
+            if (i === currentPage) {
+                pageNumbers.append(`<button class="pageNumber current" data-page="${i}">${i}</button>`);
+            } else {
+                pageNumbers.append(`<button class="pageNumber other" data-page="${i}">${i}</button>`);
             }
-        }
+          }
+    	}
 
         // '>' 버튼 추가
         if (currentPageSize >= 5) {
@@ -337,9 +368,7 @@ $(document).ready(function () {
     });
 });
 
-
 // =========================== 관리자 목록 =================================
-
 
 $(document).ready(function() {
 
@@ -546,7 +575,7 @@ $(document).ready(function() {
     }
 });
 
-// =========================== 관리자 등록 ================================
+// =========================== 관리자 등록 =================================
 
 $(document).ready(function() {
 
@@ -571,16 +600,37 @@ $(document).ready(function() {
             success: function(data) {
                 const ul = $('.admin-add-list ul');
                 ul.empty(); // 기존에 있는 폼 삭제
-                // 팀과 등급 선택 요소에 옵션 추가
-                let teamOptions = '<option value="">팀 선택</option>';
-                let gradeOptions = '<option value="">등급 선택</option>';
 
-                data.teams.forEach(function(team) {
-                    teamOptions += `<option value="${team}">${team}</option>`;
+                let gradeOptions = '<option value="">등급 선택</option>';
+                let teamOptions = '<option value="">팀 선택</option>';
+                let uniqueTeams = [...new Set(data["teams"])]; // 중복된 팀 이름 제거
+                let uniqueGrades = [...new Set(data["grades"])]; // 중복된 직급 제거
+
+                $(document).ready(function() {
+                    // 팀 선택 박스에 옵션 설정
+                    $('.team').html(teamOptions);
+
+                    // 직접입력 텍스트 박스 숨기기
+                    $('#directBox').hide();
+
+                    $('.team').change(function () {
+                        if ( $(this).val() === 'custom' ) {
+                            // 직접입력이 선택되면 텍스트 박스 보이기
+                            $('#directBox').show();
+                        } else {
+                            // 그 외의 옵션이 선택되면 텍스트 박스 숨기기
+                            $('#directBox').hide();
+                        }
+                    });
                 });
 
-                data.grades.forEach(function(grade) {
-                    gradeOptions += `<option value="${grade}">${grade}</option>`;
+                uniqueTeams.forEach(function(team) {
+                    teamOptions += `<option value="team">${team}</option>`;
+                });
+                teamOptions += '<option value="custom">직접입력</option>'; // 직접입력 옵션 추가
+
+                uniqueGrades.forEach(function(grade) {
+                    gradeOptions += `<option value="grade">${grade}</option>`;
                 });
 
                 // 폼을 한 번만 추가
@@ -604,9 +654,10 @@ $(document).ready(function() {
                         <input type="date" class="birth" name="adminBirth" placeholder="생년월일">
                     </li>
                     <li>
-                        <select class="team" name="adminTeam">
+                        <select id="selbox" class="team" name="adminTeam">
                             ${teamOptions}
                         </select>
+                        <input type="text" id="directBox" class="team" name="directBoxTeam" placeholder="부서명을 입력하세요">
                     </li>
                     <li>
                         <select class="grade" name="adminGrade">
@@ -621,16 +672,19 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('Error loading member list: ' + textStatus + ' ' + errorThrown);
             }
-
         });
 
 
 
+
         $('#insight-tbl-admin-add').on('submit', 'form', function(e) {
+            $.ajax({
 
 
+            //     민영이가 할 부분 입니다.
 
 
+            });
         });
     }
 
@@ -638,15 +692,4 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-
 });
-
-
-
-
-

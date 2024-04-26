@@ -26,9 +26,9 @@ public enum AdminSQL {
 
     COUNT_NOTICE("SELECT COUNT(*) FROM notice"),
 
-    SELECTION_NOTICE_LIST("SELECT * FROM notice ORDER BY notice_no DESC LIMIT ? OFFSET ?"),
+    SELECTION_NOTICE_LIST("select * from (select row_number() over(order by notice_no desc) rnum, n.* from notice n)where rnum >= ? and rnum <= ?"),
 
-    SELECTION_MAX_NOTICE_NO("SELECT IFNULL(MAX(notice_no), 0) + 1 FROM notice"),
+    SELECTION_MAX_NOTICE_NO("SELECT COALESCE(MAX(notice_no), 0) + 1 FROM notice"),
 
     INSERT_NOTICE("INSERT INTO notice VALUES (?, ?, ?, ?, now())"),
 
