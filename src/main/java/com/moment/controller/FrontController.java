@@ -16,7 +16,12 @@ import java.util.StringTokenizer;
 public class FrontController extends HttpServlet {
 
   
-    public FrontController() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public FrontController() {
         super();
     }
 
@@ -25,14 +30,14 @@ public class FrontController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
 
-        String requestURI = request.getRequestURI().substring(1);
+        String requestURI = request.getRequestURI().substring(8);
         System.out.println("Request URI: " + requestURI);
 
         Action action = null;
         ActionForward forward = null;
         Properties prop = new Properties();
         // TODO : 본인들 파일 경로 잘 확인해서 fileInputStream 경로 설정하기
-        FileInputStream fis = new FileInputStream("/Users/patrick/Downloads/NCS/Dairy/Moment/src/main/java/com/moment/configuration/mapping.properties");
+        FileInputStream fis = new FileInputStream("C:\\Users\\goott3\\git\\Moment\\src\\main\\java\\com\\moment\\configuration\\mapping.properties");
         prop.load(fis);
         String value = prop.getProperty(requestURI).trim();
         System.out.println("value: " + value);

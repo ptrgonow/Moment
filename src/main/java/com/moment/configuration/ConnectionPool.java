@@ -31,7 +31,7 @@ public class ConnectionPool {
         try {
             Context initCtx = new InitialContext();
             Context ctx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) ctx.lookup("jdbc/maria");
+            DataSource ds = (DataSource) ctx.lookup("jdbc/myoracle");
             conn = ds.getConnection();
             System.out.println("DB 연결 성공");
 
