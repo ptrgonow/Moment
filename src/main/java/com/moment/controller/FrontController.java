@@ -4,6 +4,7 @@ import com.moment.action.Action;
 import com.moment.action.ActionForward;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,7 @@ import java.lang.reflect.Constructor;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-
+@MultipartConfig
 public class FrontController extends HttpServlet {
   
     public FrontController() {

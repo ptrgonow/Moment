@@ -470,24 +470,25 @@ $(document).ready(function() {
             $('.admin-cont-list').hide();
         });
 
-        $(document).on('click', '.memberDelete', function() {
-            const memberNo = $(this).closest('li').find('.adminNo').text();
-
-            $.ajax({
-                url: 'admin_member_delete.go',
-                type: 'POST',
-                data: { memberNo: memberNo },
-                success: function(data) {
-                    alert('관리자가 성공적으로 삭제되었습니다.');
-                    getMemberList();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert('관리자 삭제에 실패했습니다.');
-                    console.log('Error: ' + textStatus + ' ' + errorThrown);
-                }
-            });
-        });
     }
+
+    $(document).on('click', '.memberDelete', function() {
+        const memberNo = $(this).closest('li').find('.adminNo').text();
+
+        $.ajax({
+            url: 'admin_member_delete.go',
+            type: 'POST',
+            data: { memberNo: memberNo },
+            success: function(data) {
+                alert('관리자가 성공적으로 삭제되었습니다.');
+                getMemberList();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('관리자 삭제에 실패했습니다.');
+                console.log('Error: ' + textStatus + ' ' + errorThrown);
+            }
+        });
+    });
 
 
 });

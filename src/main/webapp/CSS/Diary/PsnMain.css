@@ -47,6 +47,50 @@ html {
     overflow-x: hidden;
 }
 
+/*         header         */
+
+.nav-bar {
+    width: 100vw;
+    height: 8vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.nav-bar-left, .nav-bar-right {
+    display: flex;
+}
+
+.nav-bar a {
+    margin: 0 1em;
+    text-decoration: none;
+    color: black;
+}
+.nav-bar-right a:hover {
+    transform: scale(1.1);
+}
+
+.nav-bar-left a img {
+    width: 5rem;
+    height: 4rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+
+/*         main         */
+
+
 i .bi {
     font-size: 1.5rem;
     margin-right: 0.5rem;
@@ -266,6 +310,10 @@ label i {
 
 }
 
+#colorInput {
+    display: none !important;
+}
+
 .plus-btn {
     border: none;
     outline: none;
@@ -275,16 +323,26 @@ label i {
 
 .plus-btn i {
    font-size: 2rem;
-    color: var(--primary);
+    color: var(--black);
+    margin: 0 2rem;
 }
 
 .plus-btn i:hover {
     transform: scale(1.1%);
-    color: var(--black);
+    color: var(--white);
 
 }
 
-/* 팔레트 */
+.color-picker {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+
+
+
+/*      팔레트       */
 .palette .color-selector:nth-child(1) .circle:nth-child(1) {background-color: var(--white);}
 .palette .color-selector:nth-child(1) .circle:nth-child(2) {background-color: var(--pink);}
 .palette .color-selector:nth-child(1) .circle:nth-child(3) {background-color: var(--orange);}
@@ -294,4 +352,4 @@ label i {
 .palette .color-selector:nth-child(2) .circle:nth-child(2) {background-color: var(--black);}
 .palette .color-selector:nth-child(2) .circle:nth-child(3) {background-color: var(--green);}
 .palette .color-selector:nth-child(2) .circle:nth-child(4) {background-color: var(--blue);}
-.palette .color-selector:nth-child(2) .circle:nth-child(5) {background-color: var(--purple);}
+

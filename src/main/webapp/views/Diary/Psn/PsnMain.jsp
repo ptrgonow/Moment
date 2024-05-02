@@ -8,11 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PSN</title>
-    <link rel="stylesheet" href="/CSS/Diary/PsnMain.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+   <%-- <link rel="stylesheet" href="/CSS/Diary/PsnMain.css">--%>
+   <%-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">--%>
 </head>
+<body>
+
+<jsp:include page="/views/Header/header.jsp" />
+
 <div class="container">
 
     <div class="side-container">
@@ -27,9 +33,8 @@
     </div>
 
     <div class="editing-container">
-        <div class="color">
-            <span class="bi bi-palette"></span>배경
-        </div>
+        <div class="color"><span class="bi bi-palette"></span>배경</div>
+
         <div class="palette">
             <div class="color-selector">
                 <div class="circle"></div>
@@ -43,7 +48,8 @@
                 <div class="circle"></div>
                 <div class="circle"></div>
                 <div class="circle"></div>
-                <div class="circle"></div>
+
+
             </div>
         </div>
         <div>
@@ -52,13 +58,12 @@
         </div>
         <div>
             <button id="addButton" class="plus-btn"><i class="bi bi-journal-plus"></i></button>
+            <button id="plusButton" class="plus-btn"><i class="bi bi-journal-check"></i></button>
         </div>
-
     </div>
-
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="/JS/Diary/Psn/PsnMain.js"></script>
-
+</body>
 </html>
