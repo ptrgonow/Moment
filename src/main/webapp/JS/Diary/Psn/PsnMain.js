@@ -1,3 +1,5 @@
+
+
 $('#addButton').on('click', function() {
     const viewContainer = $('.view-container');
     if (viewContainer.find('.Picture').length > 0) {
@@ -51,6 +53,7 @@ $('#addButton').on('click', function() {
                 success: function(data) {
                     alert('이미지 업로드 성공');
                     imageContainer.remove(); // 이미지 업로드 성공 시 요소 삭제
+                    $('#textBox').val(''); // 이미지 업로드 성공 시 텍스트 박스 초기화
                 },
                 error: function() {
                     alert('이미지 업로드 실패');

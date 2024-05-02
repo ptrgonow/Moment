@@ -246,3 +246,4 @@ Icon
 /tokens/StoredCredential
 /qodana.yaml
 /tokens/
+/src/main/resources/awsRds.properties
