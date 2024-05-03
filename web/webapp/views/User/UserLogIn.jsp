@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moment</title>
     <link rel="stylesheet" type="text/css" href="/CSS/User/UserLogIn.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
@@ -77,15 +77,15 @@
 
         <div class="login-container">
             <img class="Picture-img" src="https://images.pexels.com/photos/7237170/pexels-photo-7237170.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" />
-            <form action="user_login.go" method="post">
+            <form action="" method="post" id="loginForm">
                 <table class="login-tbl">
                     <tr>
                         <th>id</th>
-                        <td><input type="text" class="user_id" name="user_id" /></td>
+                        <td><input type="text" id="userId" class="userId" name="userId" /></td>
                     </tr>
                     <tr>
                         <th>password</th>
-                        <td><input type="password" class="user_pwd" name="user_pwd" /></td>
+                        <td><input type="password" id="userPwd" class="userPwd" name="userPwd" /></td>
                     </tr>
                     <tr>
                         <td colspan="2" class="sub-td">
@@ -101,15 +101,15 @@
                 <table class="sign-tbl">
                     <tr>
                         <th>id</th>
-                        <td><input type="text" class="sign-id" name="sign_id" placeholder="이메일" /></td>
+                        <td><input type="text" class="sign-id" name="signId" placeholder="이메일" /></td>
                     </tr>
                     <tr>
                         <th>password</th>
-                        <td><input type="password" class="sign-pwd" name="sign_pwd" placeholder="비밀번호"/></td>
+                        <td><input type="password" class="sign-pwd" name="signPwd" placeholder="비밀번호"/></td>
                     </tr>
                     <tr>
                         <th>name</th>
-                        <td><input type="text" class="sign-name" name="sign_name" placeholder="이름" /></td>
+                        <td><input type="text" class="sign-name" name="signName" placeholder="이름" /></td>
                     </tr>
                     <tr>
                         <td colspan="2" class="sub-td">
@@ -134,7 +134,7 @@
         </div>
         <div class="footer-info">
             <ul>
-                <li>개발자 : 강석민, 최성임, 김진우, 윤태근, 김민영</li>
+                <li>개발자 : 강석민, 김진우, 윤태근, 김민영</li>
                 <li class="devTime"></li>
             </ul>
         </div>

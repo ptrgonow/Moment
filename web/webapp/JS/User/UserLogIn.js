@@ -54,7 +54,7 @@ window.addEventListener('mousemove', function(e) {
 
 // 페이지가 열리면 로그인 폼의 아이디 인풋칸에 커서가 자동으로 위치하게 하는 이벤트
 document.addEventListener('DOMContentLoaded', (event) => {
-    const useridInput = document.querySelector('.user_id');
+    const useridInput = document.querySelector('.userId');
     useridInput.focus();
 });
 
@@ -186,4 +186,34 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         });
     }
+});
+
+
+// 로그인 폼을 제출하는 이벤트
+
+$('#loginForm').on('submit', function(e) {
+    e.preventDefault();
+
+    const userId = $('#userId').val();
+    const userPwd = $('#userPwd').val();
+
+    $.ajax({
+        url: "user_login.go",
+        type: "POST",
+        data: {
+            userId: userId,
+            userPwd: userPwd
+        },
+        success: function(response) {
+            const userName = response;
+            console.log(userName);
+            sessionStorage.setItem('userName', userName);
+            alert('로그인 성공');
+            window.location.href = "user_main.go";
+        },
+        error: function() {
+            // 로그인 실패
+            alert('아이디 또는 비밀번호가 틀렸습니다.');
+        }
+    });
 });

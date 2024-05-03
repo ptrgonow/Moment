@@ -11,7 +11,9 @@
     <title>Title</title>
 </head>
 <body>
+<jsp:include page="/views/Header/header.jsp" />
 
+<h2>유저 메인 페이지</h2>
 
 </body>
 </html>

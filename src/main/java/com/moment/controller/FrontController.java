@@ -27,8 +27,14 @@ public class FrontController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
 
-        String requestURI = request.getRequestURI().substring(1);
+        String contextPath = request.getContextPath();
+        String requestURI = request.getRequestURI().replaceFirst(contextPath + "/", "");
+        int lastIndex = requestURI.lastIndexOf("/");
+        if (lastIndex != -1) {
+            requestURI = requestURI.substring(lastIndex + 1);
+        }
         System.out.println("Request URI: " + requestURI);
+
 
         Action action = null;
         ActionForward forward = null;

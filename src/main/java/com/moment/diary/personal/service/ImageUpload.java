@@ -15,7 +15,7 @@ public class ImageUpload implements Action {
         AwsSAO sao = AwsSAO.getInstance();
 
         Part part = request.getPart("file");
-        String boardWriter = "patrick";
+        String boardWriter = request.getParameter("boardWriter");
 
         sao.uploadImageAndSaveKeys(part, boardWriter);
 

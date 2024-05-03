@@ -25,17 +25,16 @@
     <%-- 상단 가로 네비 바 --%>
     <div class="nav-bar">
         <div class="nav-bar-left">
-            <a href="<c:url value="/user_login_test.go"/>" class="nav-bar-left-title"><img src="<c:url value="/image/logoprint.svg"/>" alt="logo" /></a>
+            <a href="<c:url value="/user_main.go"/>" class="nav-bar-left-title"><img src="<c:url value="/image/logoprint.svg"/>" alt="logo" /></a>
         </div>
         <div class="nav-bar-right">
-            <a href="#" class="nav-bar-right-item">Home</a>
-            <a href="#" class="nav-bar-right-item">Diary</a>
-            <a href="#" class="nav-bar-right-item">Gallery</a>
+            <a href="<c:url value="/user_main.go"/>" class="nav-bar-right-item">Home</a>
+            <a href="<c:url value="/user_psn.go"/>" class="nav-bar-right-item">Diary</a>
+            <a href="/views/Diary/Share/ShareMain.jsp" class="nav-bar-right-item">Gallery</a>
             <a href="#" class="nav-bar-right-item">Shop</a>
         </div>
         <div class="user-info">
-            <a href="#" class="user-info-item">\${UserId}}</a>
-            <%--<img src="<c:url value="/image/proooooooo.jpeg"/>" alt="user" />--%>
+            <a href="#" class="user-info-item">${sessionScope.userName}</a>
         </div>
 
 </div>
