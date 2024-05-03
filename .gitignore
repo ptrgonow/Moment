@@ -242,8 +242,6 @@ Icon
 /mvnw.cmd
 /pom.xml
 /src/main/resources/credentials.json
-/tokens/StoredCredential
-/qodana.yaml
 /tokens/
 /src/main/resources/awsRds.properties
 /web/webapp/META-INF/context.xml
