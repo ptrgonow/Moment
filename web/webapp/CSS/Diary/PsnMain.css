@@ -1,0 +1,355 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+
+:root {
+    --primary: #ADC6E1;
+    --pink: #f89fe4;
+    --blue: #00a8ff;
+    --green: #00d2d3;
+    --yellow: #f9ca24;
+    --purple: #a29bfe;
+    --red: #ff7675;
+    --orange: #f97f51;
+    --white: #fff;
+    --black: #000;
+    --gray: #f5f6fa;
+    --dark:#2f3640;
+    --light: #f5f6fa;
+    --gradient: var(--gradient, linear-gradient(120deg, var(--pink), var(--blue), var(--green), var(--yellow), var(--purple), var(--red), var(--orange)));
+
+}
+
+
+
+
+
+
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: border-radius 0.1s;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+/*         header         */
+
+.nav-bar {
+    width: 100vw;
+    height: 8vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.nav-bar-left, .nav-bar-right {
+    display: flex;
+}
+
+.nav-bar a {
+    margin: 0 1em;
+    text-decoration: none;
+    color: black;
+}
+.nav-bar-right a:hover {
+    transform: scale(1.1);
+}
+
+.nav-bar-left a img {
+    width: 5rem;
+    height: 4rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+
+/*         main         */
+
+
+i .bi {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family: 'Nanum Pen Script', cursive;
+    background: #c0b7b7;
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    margin: auto;
+}
+.side-container {
+    width: 10vw;
+    height: 70vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 1rem 0 10rem;
+    padding: 1.5rem;
+    align-items: center;
+    border-radius: 10px;
+    background-color: var(--gradient);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+
+.side-container a {
+    margin: 1rem 0;
+}
+
+.view-container {
+    width: 40vw;
+    height: 70vh;
+    position: relative;
+    flex: 1;
+    margin: 0 1rem 0 1rem;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--gray);
+}
+
+.editing-container {
+    width: 40vw;
+    height: 70vh;
+    position: relative;
+    flex: 1;
+    margin: 0 10rem 0 1rem;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #c9bbbb;
+}
+
+.editing-container div {
+    margin: 1rem;
+}
+
+.Picture {
+    display: inline-block;
+    position: relative;
+    border: 5px solid #fff;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    user-select: none;
+    cursor: pointer;
+    margin: auto;
+}
+
+.Picture-img {
+    display: block;
+    width: 300px;
+    height: 300px;
+    pointer-events: none;
+}
+
+.Picture-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 70px;
+    padding: 12px 24px;
+    font-size: 1.5rem;
+    text-align: center;
+    font-family: 'Nanum Pen Script', cursive;
+}
+
+
+label[for="textBox"] {
+    color: #fff;
+    font-size: 1.5rem;
+    font-family: 'Nanum Pen Script', cursive;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+label i {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.text-edit {
+    outline: none;
+    border: none;
+    width: 25rem;
+    height: 2rem;
+    font-size: 1.5rem;
+    font-family: 'Nanum Pen Script', cursive;
+    resize: none;
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.Picture-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 1.5rem;
+    color: #000;
+    cursor: pointer;
+}
+
+.Picture-close:hover {
+    color: #f00;
+}
+
+.upload {
+    width: 3rem;
+    height: 2rem;
+    background: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload i {
+    cursor: pointer;
+    margin: 0;
+}
+
+.upload i:hover {
+    color: var(--red);
+}
+
+#file {
+    display: none;
+}
+
+/*  ============ 컬러 선택자 =============   */
+
+.color-selector {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.editing-container div.color {
+    color: #fff;
+    font-size: 1.5rem;
+    font-family: 'Nanum Pen Script', cursive;
+    display: block;
+}
+
+.editing-container div.palette {
+    display: block;
+}
+
+.color .bi-palette {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+
+}
+
+.color-selector div:hover{
+    transform: scale(1.1);
+    border: 1px solid #fff;
+
+}
+
+.circle {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin: 0 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s;
+
+}
+
+#colorInput {
+    display: none !important;
+}
+
+.plus-btn {
+    border: none;
+    outline: none;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.plus-btn i {
+   font-size: 2rem;
+    color: var(--black);
+    margin: 0 2rem;
+}
+
+.plus-btn i:hover {
+    transform: scale(1.1%);
+    color: var(--white);
+
+}
+
+.color-picker {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+
+
+
+/*      팔레트       */
+.palette .color-selector:nth-child(1) .circle:nth-child(1) {background-color: var(--white);}
+.palette .color-selector:nth-child(1) .circle:nth-child(2) {background-color: var(--pink);}
+.palette .color-selector:nth-child(1) .circle:nth-child(3) {background-color: var(--orange);}
+.palette .color-selector:nth-child(1) .circle:nth-child(4) {background-color: var(--primary);}
+.palette .color-selector:nth-child(1) .circle:nth-child(5) {background-color: var(--yellow);}
+.palette .color-selector:nth-child(2) .circle:nth-child(1) {background-color: var(--red);}
+.palette .color-selector:nth-child(2) .circle:nth-child(2) {background-color: var(--black);}
+.palette .color-selector:nth-child(2) .circle:nth-child(3) {background-color: var(--green);}
+.palette .color-selector:nth-child(2) .circle:nth-child(4) {background-color: var(--blue);}
+
